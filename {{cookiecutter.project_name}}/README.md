@@ -41,3 +41,10 @@ print(cfg.project_name)
 本项目集成[dragons96_tools](https://gitee.com/dragons96/py_dragons96_tools)工具框架
 
 ## 部署
+
+
+## 打包
+### 一、使用pyinstaller打包
+1. 安装, `poetry add --dev pyinstaller`
+2. 打包, `pyinstaller --onefile ./src/{{cookiecutter.package_name}}/__main__.py`
+3. 运行, `./dist/{{cookiecutter.package_name}}.exe --project_dir .`
