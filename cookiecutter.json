@@ -6,7 +6,7 @@
   "email": "521274311@qq.com",
   "git_type": ["gitee", "github"],
   "git_user": "dragons96",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "copyright_year": "{% now 'utc', '%Y' %}",
   "license": ["MIT", "Apache-2.0", "GPL-3.0"],
   "development_status": [
