@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/pypi/l/{{cookiecutter.project_name}})][license]
 
 [![Read the documentation at https://{{cookiecutter.project_name}}.readthedocs.io/](https://img.shields.io/readthedocs/{{cookiecutter.project_name}}/latest.svg?label=Read%20the%20Docs)][read the docs]
-[![Tests](https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/workflows/Tests/badge.svg)][tests]
+[![Tests](https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/workflows/Tests/badge.svg)][tests]
 [![Codecov](https://codecov.io/gh/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/branch/main/graph/badge.svg)][codecov]
 
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)][pre-commit]
@@ -14,10 +14,10 @@
 
 [pypi status]: https://pypi.org/project/{{cookiecutter.project_name}}/
 [read the docs]: https://{{cookiecutter.project_name}}.readthedocs.io/
-[tests]: https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/actions?workflow=Tests
+[tests]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/actions?workflow=Tests
 [codecov]: https://app.codecov.io/gh/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}
-[pre-commit]: https://github.com/pre-commit/pre-commit
-[black]: https://github.com/psf/black
+[pre-commit]: https://{{cookiecutter.git_type}}.com/pre-commit/pre-commit
+[black]: https://{{cookiecutter.git_type}}.com/psf/black
 
 ## Features
 
@@ -58,14 +58,14 @@ please [file an issue] along with a detailed description.
 
 This project was generated from [@cjolowicz]'s [Hypermodern Python Cookiecutter] template.
 
-[@cjolowicz]: https://github.com/cjolowicz
+[@cjolowicz]: https://{{cookiecutter.git_type}}.com/cjolowicz
 [pypi]: https://pypi.org/
-[hypermodern python cookiecutter]: https://github.com/cjolowicz/cookiecutter-hypermodern-python
-[file an issue]: https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/issues
+[hypermodern python cookiecutter]: https://{{cookiecutter.git_type}}.com/cjolowicz/cookiecutter-hypermodern-python
+[file an issue]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/issues
 [pip]: https://pip.pypa.io/
 
 <!-- github-only -->
 
-[license]: https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/blob/main/LICENSE
-[contributor guide]: https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/blob/main/CONTRIBUTING.md
+[license]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/blob/main/LICENSE
+[contributor guide]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/blob/main/CONTRIBUTING.md
 [command-line reference]: https://{{cookiecutter.project_name}}.readthedocs.io/en/latest/usage.html

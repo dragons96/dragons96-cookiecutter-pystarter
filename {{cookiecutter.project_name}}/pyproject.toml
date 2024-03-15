@@ -5,8 +5,8 @@ description = "{{cookiecutter.friendly_name}}"
 authors = ["{{cookiecutter.author}} <{{cookiecutter.email}}>"]
 license = "{{cookiecutter.license}}"
 readme = "README.md"
-homepage = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}"
-repository = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}"
+homepage = "https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}"
+repository = "https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}"
 documentation = "https://{{cookiecutter.project_name}}.readthedocs.io"
 {% if cookiecutter.package_name != cookiecutter.project_name.replace('-', '_') -%}
 packages = [
@@ -18,11 +18,15 @@ classifiers = [
 ]
 
 [tool.poetry.urls]
-Changelog = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/releases"
+Changelog = "https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/releases"
 
 [tool.poetry.dependencies]
 python = "^3.7"
 click = ">=8.0.1"
+pydantic = ">=2.6.0"
+loguru = "^0.7.2"
+pyyaml = "^6.0.1"
+dragons96_tools = ">=0.0.1"
 
 [tool.poetry.dev-dependencies]
 Pygments = ">=2.10.0"
