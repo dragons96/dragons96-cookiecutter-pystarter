@@ -16,7 +16,7 @@ def load_config(project_dir: str):
     config_file_path = config_dir + os.sep + f'application.yml'
     global _cfg
     # 配置对象 cfg
-    logger.debug('开始尝试使用[dragons96_tools]包加载系统配置文件')
+    logger.debug('开始尝试使用[dragons96_tools]包加载系统配置文件[{}]', config_file_path)
     try:
         from dragons96_tools.files import AutoDataFileLoader
         _data_file_loader = AutoDataFileLoader()
@@ -26,7 +26,7 @@ def load_config(project_dir: str):
                                           modelclass=Config) or Config()
         logger.debug('使用[dragons96_tools]包加载配置成功')
     except ImportError:
-        logger.debug('当前未导入[dragons96_tools]包, 开始尝试使用[pyyaml]加载配置')
+        logger.debug('当前未导入[dragons96_tools]包, 开始尝试使用[pyyaml]加载配置[{}]', config_file_path)
         try:
             import yaml
             with open(config_file_path, encoding='utf-8') as f:
