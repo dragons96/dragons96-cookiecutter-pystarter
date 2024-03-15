@@ -1,71 +1,40 @@
 # {{ cookiecutter.friendly_name }}
 
-[![PyPI](https://img.shields.io/pypi/v/{{cookiecutter.project_name}}.svg)][pypi status]
-[![Status](https://img.shields.io/pypi/status/{{cookiecutter.project_name}}.svg)][pypi status]
-[![Python Version](https://img.shields.io/pypi/pyversions/{{cookiecutter.project_name}})][pypi status]
-[![License](https://img.shields.io/pypi/l/{{cookiecutter.project_name}})][license]
+### 项目仓库地址: https://{{cookiecutter.git_type}}.com_/{{cookiecutter.git_user}}/{{ cookiecutter.project_name }}
 
-[![Read the documentation at https://{{cookiecutter.project_name}}.readthedocs.io/](https://img.shields.io/readthedocs/{{cookiecutter.project_name}}/latest.svg?label=Read%20the%20Docs)][read the docs]
-[![Tests](https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/workflows/Tests/badge.svg)][tests]
-[![Codecov](https://codecov.io/gh/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/branch/main/graph/badge.svg)][codecov]
+## 安装依赖
+1. pip install poetry
+2. poetry lock --no-update
+3. 开发环境安装依赖：poetry install (若出现哪个包安装不了先单独pip install 某个包再执行poetry install)
+4. 正式环境安装依赖：poetry install --only main (若出现哪个包安装不了先单独pip install 某个包再执行poetry install)
 
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)][pre-commit]
-[![Black](https://img.shields.io/badge/code%20style-black-000000.svg)][black]
+## 运行
+1. poetry run {{ cookiecutter.project_name }}
 
-[pypi status]: https://pypi.org/project/{{cookiecutter.project_name}}/
-[read the docs]: https://{{cookiecutter.project_name}}.readthedocs.io/
-[tests]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/actions?workflow=Tests
-[codecov]: https://app.codecov.io/gh/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}
-[pre-commit]: https://{{cookiecutter.git_type}}.com/pre-commit/pre-commit
-[black]: https://{{cookiecutter.git_type}}.com/psf/black
+## fastapi 配置
+1. poetry add fastapi uvicorn
+2. 编辑src/{{ cookiecutter.package_name }}/__main__.py文件, 示例如下
+```python
+from fastapi import FastAPI
 
-## Features
+app = FastAPI()
 
-- TODO
 
-## Requirements
+@app.get('/')
+def main():
+    return "{{cookiecutter.project_name}}"
+```
+3. 运行 `poetry run uvicorn {{cookiecutter.package_name}}.__main__:app --host 0.0.0.0 --port 8000`
 
-- TODO
+## 功能说明
+### 1.配置管理
+1. `config/application.yml` 配置内容, `src/{{ cookiecutter.package_name }}/models/config.py` 里更新`Config`类对应的属性
+2. 使用方式如下:
+```python
+# cfg 为 {{ cookiecutter.package_name }}.models.config.Config 实例
+from {{ cookiecutter.package_name }}.config import cfg
 
-## Installation
-
-You can install _{{cookiecutter.friendly_name}}_ via [pip] from [PyPI]:
-
-```console
-$ pip install {{cookiecutter.project_name}}
+print(cfg.project_name)
 ```
 
-## Usage
-
-Please see the [Command-line Reference] for details.
-
-## Contributing
-
-Contributions are very welcome.
-To learn more, see the [Contributor Guide].
-
-## License
-
-Distributed under the terms of the [{{cookiecutter.license.replace("-", " ")}} license][license],
-_{{cookiecutter.friendly_name}}_ is free and open source software.
-
-## Issues
-
-If you encounter any problems,
-please [file an issue] along with a detailed description.
-
-## Credits
-
-This project was generated from [@cjolowicz]'s [Hypermodern Python Cookiecutter] template.
-
-[@cjolowicz]: https://{{cookiecutter.git_type}}.com/cjolowicz
-[pypi]: https://pypi.org/
-[hypermodern python cookiecutter]: https://{{cookiecutter.git_type}}.com/cjolowicz/cookiecutter-hypermodern-python
-[file an issue]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/issues
-[pip]: https://pip.pypa.io/
-
-<!-- github-only -->
-
-[license]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/blob/main/LICENSE
-[contributor guide]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/blob/main/CONTRIBUTING.md
-[command-line reference]: https://{{cookiecutter.project_name}}.readthedocs.io/en/latest/usage.html
+## 部署

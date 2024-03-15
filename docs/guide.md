@@ -248,7 +248,7 @@ Here is a complete list of the project variables defined by this template:
 - - `email`
   - E-mail address of the author
   - katherine@example.com
-- - `github_user`
+- - `git_user`
   - GitHub username of the author
   - `katherine`
 - - `version`

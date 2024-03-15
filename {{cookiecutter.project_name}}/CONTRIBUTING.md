@@ -12,9 +12,9 @@ Here is a list of important resources for contributors:
 - [Code of Conduct]
 
 [{{cookiecutter.license.replace("-", " ").lower()}} license]: https://opensource.org/licenses/{{cookiecutter.license}}
-[source code]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}
+[source code]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.git_user}}/{{cookiecutter.project_name}}
 [documentation]: https://{{cookiecutter.project_name}}.readthedocs.io/
-[issue tracker]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/issues
+[issue tracker]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.git_user}}/{{cookiecutter.project_name}}/issues
 
 ## How to report a bug
 
@@ -108,7 +108,7 @@ $ nox --session=pre-commit -- install
 It is recommended to open an issue before starting work on anything.
 This will allow a chance to talk it over with the owners and validate your approach.
 
-[pull request]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/pulls
+[pull request]: https://{{cookiecutter.git_type}}.com/{{cookiecutter.git_user}}/{{cookiecutter.project_name}}/pulls
 
 <!-- github-only -->
 
