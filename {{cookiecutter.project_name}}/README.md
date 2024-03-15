@@ -37,4 +37,7 @@ from {{ cookiecutter.package_name }}.config import cfg
 print(cfg.project_name)
 ```
 
+## 拓展
+本项目集成[dragons96_tools](https://gitee.com/dragons96/py_dragons96_tools)工具框架
+
 ## 部署
