@@ -15,6 +15,10 @@ def load_config(project_dir: str):
     # 当前项目的配置文件 (若需要做多环境配置自行修改, 推荐使用dragons96_tools.env环境工具)
     config_file_path = config_dir + os.sep + f'application.yml'
     global _cfg
+    if not os.path.exists(config_file_path):
+        logger.warning('未找到配置文件[{}], 忽略配置', config_file_path)
+        _cfg = Config()
+        return
     # 配置对象 cfg
     logger.debug('开始尝试使用[dragons96_tools]包加载系统配置文件[{}]', config_file_path)
     try:
