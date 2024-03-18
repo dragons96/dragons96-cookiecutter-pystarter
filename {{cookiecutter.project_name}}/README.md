@@ -34,7 +34,7 @@ def main():
 # cfg 为 {{ cookiecutter.package_name }}.models.config.Config 实例
 from {{ cookiecutter.package_name }}.config import cfg
 
-print(cfg.project_name)
+print(cfg().project_name)
 ```
 
 ## 拓展
