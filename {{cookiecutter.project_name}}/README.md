@@ -47,4 +47,4 @@ print(cfg().project_name)
 ### 一、使用pyinstaller打包
 1. 安装, `poetry add --dev pyinstaller`
 2. 打包, `pyinstaller --onefile ./src/{{cookiecutter.package_name}}/__main__.py`
-3. 运行, `./dist/{{cookiecutter.package_name}}.exe --project_dir .`
+3. 运行, `./dist/{{cookiecutter.package_name}}.exe --project_dir .` 或 `./dist/{{cookiecutter.package_name}} --project_dir .`
