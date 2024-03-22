@@ -26,6 +26,10 @@ def main():
 ```
 3. 运行 `poetry run uvicorn {{cookiecutter.package_name}}.__main__:app --host 0.0.0.0 --port 8000`
 
+## 环境变量
+1. PROJECT_DIR: 项目路径, 通常无需设置, 打包后需设置
+2. dragons96_tools包提供的ENV: 当前环境, dev=开发环境, test=测试环境, pro=生产环境
+
 ## 功能说明
 ### 1.配置管理
 1. `config/application.yml` 配置内容, `src/{{ cookiecutter.package_name }}/models/config.py` 里更新`Config`类对应的属性
