@@ -38,6 +38,8 @@ print(cfg().project_name)
 
 ## 打包
 ### 一、使用pyinstaller打包
-1. 安装, `poetry add --dev pyinstaller`
-2. 打包, `pyinstaller --onefile ./src/{{cookiecutter.package_name}}/__main__.py`
-3. 运行, `./dist/{{cookiecutter.package_name}}.exe --project_dir .` 或 `./dist/{{cookiecutter.package_name}} --project_dir .`
+1. 安装, `poetry add -D pyinstaller`
+2. 打包, `pyinstaller --onefile ./src/{{cookiecutter.package_name}}/cmd/main.py --name {cookiecutter.project_name}}`
+3. 运行, `./dist/{cookiecutter.project_name}}.exe --project_dir .` 或 `./dist/{cookiecutter.project_name}} --project_dir .`
+4. 打包fastapi, `pyinstaller --onefile ./src/{{cookiecutter.package_name}}/cmd/fastapi_main.py --hidden-import "{{cookiecutter.package_name}}.fastapi.app --name fastapi_{cookiecutter.project_name}}"`
+5. 运行fastapi, `./dist/fastapi_{cookiecutter.project_name}}.exe --project_dir .` 或 `./dist/fastapi_{cookiecutter.project_name}} --project_dir .` (更多参数执行`./dist/fastapi_{cookiecutter.project_name}}.exe -h` 或 `./dist/fastapi_{cookiecutter.project_name}} -h`)
