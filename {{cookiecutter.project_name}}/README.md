@@ -9,22 +9,11 @@
 4. 正式环境安装依赖：poetry install --only main (若出现哪个包安装不了先单独pip install 某个包再执行poetry install)
 
 ## 运行
-1. poetry run {{ cookiecutter.project_name }}
+1. 运行 `poetry run main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/main.py` (见`pyproject.toml`的`[tool.poetry.scripts]`配置)
 
 ## fastapi 配置
-1. poetry add fastapi uvicorn
-2. 编辑src/{{ cookiecutter.package_name }}/__main__.py文件, 示例如下
-```python
-from fastapi import FastAPI
-
-app = FastAPI()
-
-
-@app.get('/')
-def main():
-    return "{{cookiecutter.project_name}}"
-```
-3. 运行 `poetry run uvicorn {{cookiecutter.package_name}}.__main__:app --host 0.0.0.0 --port 8000`
+1. poetry add fastapi uvicorn[standard]
+2. 运行 `poetry run fastapi_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/fastapi_main.py`
 
 ## 环境变量
 1. PROJECT_DIR: 项目路径, 通常无需设置, 打包后需设置
