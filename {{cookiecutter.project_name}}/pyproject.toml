@@ -55,7 +55,8 @@ xdoctest = {extras = ["colors"], version = ">=0.15.10"}
 myst-parser = {version = ">=0.16.1"}
 
 [tool.poetry.scripts]
-{{cookiecutter.project_name}} = "{{cookiecutter.package_name}}.__main__:main"
+main = "{{cookiecutter.package_name}}.cmd.main:main"
+fastapi_main = "{{cookiecutter.package_name}}.cmd.fastapi_main:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]

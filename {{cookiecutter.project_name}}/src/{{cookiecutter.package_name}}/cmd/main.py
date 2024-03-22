@@ -1,16 +1,18 @@
+import os
 import click
 from loguru import logger
-from {{ cookiecutter.package_name }}.config import load_config, cfg
+from {{ cookiecutter.package_name }}.config import cfg
 from typing import Optional
 
 
 @click.command()
 @click.option('--project_dir', default=None, help='项目目录, 未打包无需传该参数, 自动基于项目树检索')
-@click.version_option(version="1.0.0")
+@click.version_option(version="1.0.0", help='查看命令版本')
+@click.help_option('-h', '--help', help='查看命令帮助')
 def main(project_dir: Optional[str] = None) -> None:
-    """{{cookiecutter.friendly_name}}."""
+    """{{cookiecutter.friendly_name}} cmd."""
     if project_dir:
-        load_config(project_dir)
+        os.environ['PROJECT_DIR'] = project_dir
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
 
 
