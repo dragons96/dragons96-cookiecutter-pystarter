@@ -50,7 +50,7 @@ def cfg() -> Config:
     """
     global _cfg
     if not _cfg:
-        project_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-        logger.debug('未设置项目目录, 自动设置项目目录: [{}]', project_dir)
+        project_dir = os.environ.get('PROJECT_DIR', os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+        logger.debug('项目目录: [{}]', project_dir)
         load_config(project_dir)
     return _cfg
