@@ -7,7 +7,7 @@ app = FastAPI()
 
 @app.get('/')
 def hello():
-    return R.ok(data='Hello')
+    return R.ok(data='Hello {{cookiecutter.project_name}}!')
 
 
 app = wrapper_exception_handler(app)
