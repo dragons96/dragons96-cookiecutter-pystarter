@@ -42,6 +42,15 @@ def load_config(project_dir: str):
             _cfg = Config()
 
 
+def get_project_dir() -> str:
+    """
+    获取项目目录位置
+    Returns:
+        项目目录路径
+    """
+    return os.environ.get('PROJECT_DIR', os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+
+
 def cfg() -> Config:
     """
     获取配置对象
@@ -50,7 +59,7 @@ def cfg() -> Config:
     """
     global _cfg
     if not _cfg:
-        project_dir = os.environ.get('PROJECT_DIR', os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+        project_dir = get_project_dir()
         logger.debug('项目目录: [{}]', project_dir)
         load_config(project_dir)
     return _cfg
