@@ -9,6 +9,7 @@ import uvicorn
 
 @click.command()
 @click.option('--project_dir', default=None, help='项目目录, 未打包无需传该参数, 自动基于项目树检索')
+@click.option('--env', default='dev', help='运行环境, dev=测试环境, test=测试环境, pro=正式环境')
 @click.option('--host', default='127.0.0.1', help='服务允许访问的ip, 若允许所有ip访问可设置0.0.0.0')
 @click.option('--port', default=8000, help='服务端口')
 @click.option('--workers', default=1, help='工作进程数')
@@ -17,10 +18,13 @@ import uvicorn
 def main(project_dir: Optional[str] = None,
          host: Optional[str] = '127.0.0.1',
          port: Optional[int] = 8000,
-         workers: Optional[int] = 1) -> None:
+         workers: Optional[int] = 1,
+         env: Optional[str] = 'dev') -> None:
     """{{cookiecutter.friendly_name}} FastAPI cmd."""
     if project_dir:
         os.environ['PROJECT_DIR'] = project_dir
+    if env:
+        os.environ['ENV'] = env
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     uvicorn.run('{{cookiecutter.package_name}}.fastapi.app:app', host=host, port=port, workers=workers)
 
