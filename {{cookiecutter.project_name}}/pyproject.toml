@@ -57,6 +57,7 @@ myst-parser = {version = ">=0.16.1"}
 [tool.poetry.scripts]
 main = "{{cookiecutter.package_name}}.cmd.main:main"
 fastapi_main = "{{cookiecutter.package_name}}.cmd.fastapi_main:main"
+flask_main = "{{cookiecutter.package_name}}.cmd.flask_main:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
