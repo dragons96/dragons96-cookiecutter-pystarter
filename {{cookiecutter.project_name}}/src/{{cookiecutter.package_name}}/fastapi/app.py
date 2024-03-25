@@ -1,13 +1,18 @@
 from fastapi import FastAPI
+from dragons96_tools.logger import setup
 from dragons96_tools.fastapi import wrapper_exception_handler
 from dragons96_tools.models import R
+from loguru import logger
 
+# 设置日志文件
+setup('fastapi_{{ cookiecutter.project_name }}.log')
 app = FastAPI()
 
 
 @app.get('/')
 def hello():
-    return R.ok(data='Hello {{cookiecutter.project_name}}!')
+    logger.info('Hello {{cookiecutter.project_name}} by FastAPI!')
+    return R.ok(data='Hello {{cookiecutter.project_name}} by FastAPI!')
 
 
 app = wrapper_exception_handler(app)

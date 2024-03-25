@@ -3,8 +3,8 @@ import multiprocessing
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg
-from typing import Optional
 from dragons96_tools.logger import setup
+from typing import Optional
 import uvicorn
 
 
@@ -17,18 +17,18 @@ import uvicorn
 @click.version_option(version="1.0.0", help='查看命令版本')
 @click.help_option('-h', '--help', help='查看命令帮助')
 def main(project_dir: Optional[str] = None,
+         env: Optional[str] = 'dev',
          host: Optional[str] = '127.0.0.1',
          port: Optional[int] = 8000,
-         workers: Optional[int] = 1,
-         env: Optional[str] = 'dev') -> None:
-    """{{cookiecutter.friendly_name}} FastAPI cmd."""
+         workers: Optional[int] = 1) -> None:
+    """Demo FastAPI cmd."""
     if project_dir:
         os.environ['PROJECT_DIR'] = project_dir
     if env:
         os.environ['ENV'] = env
-    setup('fastapi_{}.log'.format(cfg().project_name))
+    setup('flask_{}.log'.format(cfg().project_name))
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
-    uvicorn.run('{{cookiecutter.package_name}}.fastapi.app:app', host=host, port=port, workers=workers)
+    uvicorn.run('{{cookiecutter.package_name}}.flask.app:asgi_app', host=host, port=port, workers=workers)
 
 
 if __name__ == "__main__":
