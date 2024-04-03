@@ -1,4 +1,5 @@
 from typing import Optional
+
 try:
     from dragons96_tools.models import BaseModel
 except ImportError:
@@ -27,6 +28,12 @@ class RedisConfig(CommonDBConfig):
     port: Optional[int] = 6379
 
 
+class HiveConfig(CommonDBConfig):
+    """Hive 配置"""
+    host: Optional[str] = '127.0.0.1'
+    port: Optional[int] = 10000
+
+
 class ImpylaConfig(CommonDBConfig):
     """Impala 配置"""
     host: Optional[str] = '127.0.0.1'
@@ -43,4 +50,3 @@ class ClickhouseConfig(CommonDBConfig):
 class Config(BaseModel):
     """ 自定义配置项, 与config/application.yml 保持一致 """
     project_name: Optional[str] = 'undefined_project_name'
-
