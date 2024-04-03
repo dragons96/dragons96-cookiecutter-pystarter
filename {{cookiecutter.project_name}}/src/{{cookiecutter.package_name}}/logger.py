@@ -1,8 +1,5 @@
 from loguru import logger
-from
-
-{{cookiecutter.package_name}}.config
-import cfg
+from {{cookiecutter.package_name}}.config import cfg
 from dragons96_tools.logger import setup as _setup
 
 
