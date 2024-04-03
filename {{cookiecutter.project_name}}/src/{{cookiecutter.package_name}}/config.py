@@ -51,7 +51,6 @@ def _merge_config(cfg1: dict, cfg2: dict) -> dict:
     return cfg1
 
 
-
 def get_project_dir() -> str:
     """
     获取项目目录位置
