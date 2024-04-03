@@ -2,6 +2,7 @@ import os
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg
+from {{ cookiecutter.package_name }}.logger import setup
 from typing import Optional
 
 
@@ -17,6 +18,8 @@ def main(project_dir: Optional[str] = None,
         os.environ['PROJECT_DIR'] = project_dir
     if env:
         os.environ['ENV'] = env
+    # 设置日志文件
+    setup('{}.log'.format(cfg().project_name))
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
 
 

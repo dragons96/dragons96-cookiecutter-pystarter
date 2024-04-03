@@ -3,7 +3,7 @@ import multiprocessing
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg
-from dragons96_tools.logger import setup
+from {{ cookiecutter.package_name }}.logger import setup
 from typing import Optional
 import uvicorn
 

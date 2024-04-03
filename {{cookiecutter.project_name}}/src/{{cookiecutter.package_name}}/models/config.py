@@ -1,9 +1,5 @@
 from typing import Optional
-
-try:
-    from dragons96_tools.models import BaseModel
-except ImportError:
-    from pydantic import BaseModel
+from dragons96_tools.models import BaseModel
 
 
 class CommonDBConfig(BaseModel):
