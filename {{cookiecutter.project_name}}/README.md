@@ -4,21 +4,31 @@
 
 ## 安装依赖
 1. pip install poetry
-2. poetry lock --no-update
+2. poetry lock
 3. 开发环境安装依赖：poetry install (若出现哪个包安装不了先单独pip install 某个包再执行poetry install)
 4. 正式环境安装依赖：poetry install --only main (若出现哪个包安装不了先单独pip install 某个包再执行poetry install)
+5. 需要安装新增的依赖, 以sqlalchemy为例, `poetry add sqlalchemy`
+6. 安装的依赖仅本地环境需要而正式环境不需要则可使用--group dev参数, 以pyinstaller为例, `poetry add --group dev pyinstaller`
 
 ## 运行
 1. 运行 `poetry run main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/main.py` (见`pyproject.toml`的`[tool.poetry.scripts]`配置)
+
+## 实践指南
+1. 开发cmd命令行工具推荐从`src/{{cookiecutter.package_name}}/cmd/main.py`复制一个新文件作为业务cmd命令行入口进行开发
+2. 每开发一个新的cmd命令行工具需在`pyproject.toml`文件的`[tool.poetry.scripts]`下新配置一个poetry命令工具
+3. 使用`poetry run xxx`执行开发的cmd命令行工具
 
 ## FastAPI 配置
 1. poetry add fastapi uvicorn[standard]
 2. 运行 `poetry run fastapi_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/fastapi_main.py`
 
+PS: 若不需要可删除`src/{{cookiecutter.package_name}}/cmd/fastapi_main.py`文件与`src/{{cookiecutter.package_name}}/fastapi`包
+
 ## Flask 配置
 1. poetry add flask uvicorn[standard]
 2. 运行 `poetry run flask_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/flask_main.py`
 
+PS: 若不需要可删除`src/{{cookiecutter.package_name}}/cmd/flask_main.py`文件与`src/{{cookiecutter.package_name}}/flask`包
 
 ## 环境变量
 1. PROJECT_DIR: 项目路径, 通常无需设置, 打包后需设置
