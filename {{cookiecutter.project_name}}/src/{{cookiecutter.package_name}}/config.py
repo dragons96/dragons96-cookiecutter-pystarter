@@ -17,7 +17,7 @@ def _load_config(project_dir: str):
     config_dir = project_dir + os.sep + 'config'
     # 当前项目的配置文件 (若需要做多环境配置自行修改, 推荐使用dragons96_tools.env环境工具)
     config_file_path = config_dir + os.sep + f'application.yml'
-    env_config_file_path = config_dir + os.sep + f'application-{get_env().value}.yml'
+    env_config_file_path = config_dir + os.sep + f'application-{get_env().name}.yml'
     exist_config_file_path, exist_env_config_file_path = os.path.exists(config_file_path), os.path.exists(env_config_file_path)
     global _cfg
     if not exist_config_file_path and not exist_env_config_file_path:
