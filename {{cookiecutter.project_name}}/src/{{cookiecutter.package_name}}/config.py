@@ -43,6 +43,8 @@ def _load_config(project_dir: str):
 
 def _merge_config(cfg1: dict, cfg2: dict) -> dict:
     """ 合并两个配置, 重复的key用cfg2覆盖cfg1 """
+    if not cfg2:
+        return cfg1
     for key, value in cfg2.items():
         if key in cfg1 and isinstance(cfg1[key], dict) and isinstance(value, dict):
             _merge_config(cfg1[key], value)
