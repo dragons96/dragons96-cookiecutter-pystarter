@@ -10,7 +10,7 @@ class CommonDBConfig(BaseModel):
     password: Optional[str] = ''
     db: Optional[str] = None
     # sqlalchemy的schema, 仅使用sqlalchemy需要配置, 例如:sqlite, mysql+pymysql等等
-    schema: Optional[str] = None
+    sqlalchemy_schema: Optional[str] = None
 
 
 class MysqlConfig(CommonDBConfig):
@@ -18,7 +18,7 @@ class MysqlConfig(CommonDBConfig):
     host: Optional[str] = '127.0.0.1'
     port: Optional[int] = 3306
     user: Optional[str] = 'root'
-    schema: Optional[str] = 'mysql+pymysql'
+    sqlalchemy_schema: Optional[str] = 'mysql+pymysql'
 
 
 class RedisConfig(CommonDBConfig):
@@ -31,14 +31,14 @@ class HiveConfig(CommonDBConfig):
     """Hive 配置"""
     host: Optional[str] = '127.0.0.1'
     port: Optional[int] = 10000
-    schema: Optional[str] = 'hive'
+    sqlalchemy_schema: Optional[str] = 'hive'
 
 
 class ImpylaConfig(CommonDBConfig):
     """Impala 配置"""
     host: Optional[str] = '127.0.0.1'
     port: Optional[int] = 21050
-    schema: Optional[str] = 'impala'
+    sqlalchemy_schema: Optional[str] = 'impala'
 
 
 class ClickhouseConfig(CommonDBConfig):
@@ -46,7 +46,7 @@ class ClickhouseConfig(CommonDBConfig):
     host: Optional[str] = '127.0.0.1'
     port: Optional[int] = 8123
     user: Optional[str] = 'root'
-    schema: Optional[str] = 'clickhouse'
+    sqlalchemy_schema: Optional[str] = 'clickhouse'
 
 
 class MultiDBConfig(BaseModel):

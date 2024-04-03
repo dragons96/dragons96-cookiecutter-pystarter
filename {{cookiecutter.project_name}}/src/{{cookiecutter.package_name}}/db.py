@@ -30,7 +30,7 @@ def db_select(_id: str) -> SqlAlchemyClient:
     url = __gen_sqlalchemy_url(config)
     logger.info('初始化ID[{}]的SqlAlchemyClient, 连接串[{}]', _id, url)
     # hive 需要额外处理
-    if config.schema == 'hive':
+    if config.sqlalchemy_schema == 'hive':
         try:
             from pyhive import hive
         except ImportError as e:
@@ -53,7 +53,7 @@ def __gen_sqlalchemy_url(config: CommonDBConfig):
     if config.host and config.port:
         hp = f'{config.host}:{config.port}'
     if hp and up:
-        return f'{config.schema}://{up}@{hp}/{config.db}'
+        return f'{config.sqlalchemy_schema}://{up}@{hp}/{config.db}'
     if hp:
-        return f'{config.schema}://{hp}/{config.db}'
-    return f'{config.schema}:///{config.db}'
+        return f'{config.sqlalchemy_schema}://{hp}/{config.db}'
+    return f'{config.sqlalchemy_schema}:///{config.db}'
