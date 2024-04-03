@@ -31,7 +31,7 @@ PS: 若不需要可删除`src/{{cookiecutter.package_name}}/cmd/fastapi_main.py`
 PS: 若不需要可删除`src/{{cookiecutter.package_name}}/cmd/flask_main.py`文件与`src/{{cookiecutter.package_name}}/flask`包
 
 ## 环境变量
-1. PROJECT_DIR: 项目路径, 通常无需设置, 打包后需设置
+1. PROJECT_DIR: 项目路径, 通常无需设置, pyinstaller打包后需设置
 2. dragons96_tools包提供的ENV: 当前环境, dev=开发环境, test=测试环境, pro=生产环境
 
 ## 功能说明
