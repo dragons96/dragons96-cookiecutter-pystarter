@@ -1,11 +1,14 @@
 import os
 from loguru import logger
 from {{cookiecutter.package_name}}.models.config import Config
+from dragons96_tools.env import get_env
+from dragons96_tools.files import AutoDataFileLoader
+from typing import Optional
 
-_cfg = None
+_cfg: Optional[Config] = None
 
 
-def load_config(project_dir: str):
+def _load_config(project_dir: str):
     """
     加载配置
     :param project_dir: 项目目录地址
@@ -14,32 +17,39 @@ def load_config(project_dir: str):
     config_dir = project_dir + os.sep + 'config'
     # 当前项目的配置文件 (若需要做多环境配置自行修改, 推荐使用dragons96_tools.env环境工具)
     config_file_path = config_dir + os.sep + f'application.yml'
+    env_config_file_path = config_dir + os.sep + f'application-{get_env().value}.yml'
+    exist_config_file_path, exist_env_config_file_path = os.path.exists(config_file_path), os.path.exists(env_config_file_path)
     global _cfg
-    if not os.path.exists(config_file_path):
-        logger.warning('未找到配置文件[{}], 忽略配置', config_file_path)
-        _cfg = Config()
-        return
-    # 配置对象 cfg
-    logger.debug('开始尝试使用[dragons96_tools]包加载系统配置文件[{}]', config_file_path)
-    try:
-        from dragons96_tools.files import AutoDataFileLoader
-        _data_file_loader = AutoDataFileLoader()
-        # 配置对象
-        _cfg = _data_file_loader.load_file(config_file_path,
-                                          encoding='utf-8',
-                                          modelclass=Config) or Config()
-        logger.debug('使用[dragons96_tools]包加载配置成功')
-    except ImportError:
-        logger.debug('当前未导入[dragons96_tools]包, 开始尝试使用[pyyaml]加载配置[{}]', config_file_path)
-        try:
-            import yaml
-            with open(config_file_path, encoding='utf-8') as f:
-                config_data = f.read()
-            _cfg = Config(**(yaml.safe_load(config_data)))
-            logger.debug('使用[pyyaml]包加载配置成功')
-        except ImportError:
-            logger.warning('当前未导入[pyyaml]包, 无法加载系统配置')
-            _cfg = Config()
+    if not exist_config_file_path and not exist_env_config_file_path:
+        logger.error('未找到配置文件[{}]或[{}], 无法加载配置, 程序终止', config_file_path, env_config_file_path)
+        exit(1)
+    _data_file_loader = AutoDataFileLoader()
+    # 配置对象_cfg
+    _cfg_dict = None
+    if exist_config_file_path:
+        _cfg_dict = _data_file_loader.load_file(config_file_path,
+                                                encoding='utf-8')
+        logger.info('加载[{}]配置文件', config_file_path)
+    if exist_env_config_file_path:
+        if _cfg_dict:
+            _cfg_dict = _merge_config(_cfg_dict, _data_file_loader.load_file(env_config_file_path,
+                                                                             encoding='utf-8'))
+        else:
+            _cfg_dict = _data_file_loader.load_file(env_config_file_path,
+                                                    encoding='utf-8')
+        logger.info('加载[{}]配置文件', env_config_file_path)
+    _cfg = Config(**_cfg_dict)
+
+
+def _merge_config(cfg1: dict, cfg2: dict) -> dict:
+    """ 合并两个配置, 重复的key用cfg2覆盖cfg1 """
+    for key, value in cfg2.items():
+        if key in cfg1 and isinstance(cfg1[key], dict) and isinstance(value, dict):
+            _merge_config(cfg1[key], value)
+        else:
+            cfg1[key] = value
+    return cfg1
+
 
 
 def get_project_dir() -> str:
@@ -61,5 +71,5 @@ def cfg() -> Config:
     if not _cfg:
         project_dir = get_project_dir()
         logger.debug('项目目录: [{}]', project_dir)
-        load_config(project_dir)
+        _load_config(project_dir)
     return _cfg
