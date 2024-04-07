@@ -2,7 +2,10 @@ import os
 import multiprocessing
 import click
 from loguru import logger
-from {{ cookiecutter.package_name }}.config import cfg
+from
+
+{{cookiecutter.package_name}}.config
+import cfg
 from dragons96_tools.logger import setup
 from typing import Optional
 import uvicorn
@@ -10,7 +13,9 @@ import uvicorn
 
 @click.command()
 @click.option('--project_dir', default=None, help='项目目录, 未打包无需传该参数, 自动基于项目树检索')
-@click.option('--env', default='dev', help='运行环境, dev=测试环境, test=测试环境, pro=正式环境')
+@click.option('--env', default='dev', help='运行环境, dev=测试环境, test=测试环境, pro=正式环境, 默认: dev')
+@click.option('--log_level', default='INFO',
+              help='日志级别, DEBUG=调试, INFO=信息, WARNING=警告, ERROR=错误, CRITICAL=严重, 默认: INFO')
 @click.option('--host', default='127.0.0.1', help='服务允许访问的ip, 若允许所有ip访问可设置0.0.0.0')
 @click.option('--port', default=8000, help='服务端口')
 @click.option('--workers', default=1, help='工作进程数')
@@ -18,6 +23,7 @@ import uvicorn
 @click.help_option('-h', '--help', help='查看命令帮助')
 def main(project_dir: Optional[str] = None,
          env: Optional[str] = 'dev',
+         log_level: Optional[str] = 'INFO',
          host: Optional[str] = '127.0.0.1',
          port: Optional[int] = 8000,
          workers: Optional[int] = 1) -> None:
@@ -26,7 +32,7 @@ def main(project_dir: Optional[str] = None,
         os.environ['PROJECT_DIR'] = project_dir
     if env:
         os.environ['ENV'] = env
-    setup('flask_{}.log'.format(cfg().project_name))
+    setup('flask_{}.log'.format(cfg().project_name), level=log_level)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     uvicorn.run('{{cookiecutter.package_name}}.flask.app:asgi_app', host=host, port=port, workers=workers)
 
