@@ -2,11 +2,8 @@ import os
 import multiprocessing
 import click
 from loguru import logger
-from
-
-{{cookiecutter.package_name}}.config
-import cfg
-from dragons96_tools.logger import setup
+from {{ cookiecutter.package_name }}.config import cfg
+from {{ cookiecutter.package_name }}.logger import setup, setup_uvicorn
 from typing import Optional
 import uvicorn
 
@@ -33,6 +30,7 @@ def main(project_dir: Optional[str] = None,
     if env:
         os.environ['ENV'] = env
     setup('flask_{}.log'.format(cfg().project_name), level=log_level)
+    setup_uvicorn('flask_uvicorn_{}.log'.format(cfg().project_name), level=log_level)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     uvicorn.run('{{cookiecutter.package_name}}.flask.app:asgi_app', host=host, port=port, workers=workers)
 

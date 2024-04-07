@@ -1,11 +1,12 @@
 from flask import Flask
 from dragons96_tools.models import R
-from dragons96_tools.logger import setup
 from uvicorn.middleware.wsgi import WSGIMiddleware
+from {{ cookiecutter.package_name }}.logger import setup, setup_uvicorn
 from loguru import logger
 
 # 设置日志文件
 setup('flask_{{ cookiecutter.project_name }}.log')
+setup_uvicorn('flask_uvicorn_{{ cookiecutter.project_name }}.log')
 app = Flask(__name__)
 
 
