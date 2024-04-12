@@ -21,6 +21,8 @@ if [ ! -d "$PROJECT_DIR/venv" ]; then
     echo "开始安装生产环境依赖"
     poetry install --only main
     echo "安装生产环境依赖完成"
+    echo "退出虚拟环境"
+    echo "项目初始化安装完成"
     deactivate
 else
     echo "虚拟环境已存在, 无需安装虚拟环境"
