@@ -9,7 +9,7 @@ demo_router = APIRouter(prefix='/demo', tags=['示例模块'])
 @demo_router.post("/create", response_model=Demo, summary="Create an demo")
 async def create_demo(demo: Demo):
     """
-    Create an demo with all the information:
+    Create a demo with all the information:
 
     - **name**: each demo must have a name
     - **description**: a long description
