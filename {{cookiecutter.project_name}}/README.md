@@ -45,6 +45,52 @@ from {{ cookiecutter.package_name }}.config import cfg
 print(cfg().project_name)
 ```
 
+### 2. DB支持
+内置基于sqlalchemy2.x支持, 使用步骤如下(以mysql为例, 其他同理):
+1. 在 `{{ cookiecutter.package_name }}.models.config.py` 文件的 `MultiDBConfig` 创建一个变量配置如下:
+```python
+# 省略无用代码
+...
+
+class MultiDBConfig(BaseModel):
+    """多 DB 配置"""
+    mysql_test_db: Optional[MysqlConfig] = MysqlConfig()
+
+# 省略无用代码
+...
+```
+2. 在配置文件 `config/application.yml` 或 环境配置文件 `config/application-{env}.yml` 中添加如下配置:
+```yaml
+# ...省略无用配置
+
+db:
+  # 这里要与 MultiDBConfig 中配置的变量名一致
+  mysql_test_db:
+    host: 127.0.0.1
+    port: 3306
+    user: root
+    password: 123456
+    db: test_db
+```
+3. 操作数据库:
+```python
+from {{ cookiecutter.package_name }}.db import db_select
+from sqlalchemy import text
+
+# db_select的参数与上面配置的名称, MultiDBConfig 中的变量名都要保持一致
+with db_select('mysql_test_db').session() as session:
+    # 这里获取的session对象就是 sqlalchemy 的 session 对象, 按照sqlalchemy 的 session 使用方式操作数据库即可
+    data = session.execute(text('select 1')).all()
+```
+4. 安装`sqlacodegen_v2`来生成数据库模型, `poetry add --group dev sqlacodegen_v2`
+5. 使用`sqlacodegen_v2`生成数据库模型, 命令如下:
+```shell
+# 生成完成之后注意检查文件编码是否为utf-8, 若不是则需要将文件转换为utf-8
+sqlacodegen mysql://root:123456@127.0.0.1:3306/test_db --outfile ./src/{{cookiecutter.package_name}}/models/db/test_db.py
+```
+6. 修改`/src/{{cookiecutter.package_name}}/models/db/test_db.py`文件中的`Base`类, 改为使用`from dragons96_tools.sqlalchemy import Base`提供的`Base`, 该`Base`类提供了与字典, `pydantic model`相互转化的方法
+
+
 ## 拓展
 本项目集成[dragons96_tools](https://gitee.com/dragons96/py_dragons96_tools)工具框架
 
