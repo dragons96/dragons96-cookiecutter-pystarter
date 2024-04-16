@@ -95,7 +95,9 @@ sqlacodegen mysql://root:123456@127.0.0.1:3306/test_db --outfile ./src/{{cookiec
 本项目集成[dragons96_tools](https://gitee.com/dragons96/py_dragons96_tools)工具框架
 
 ## 部署
-
+1. 确保环境变量存在一个python3.9+的环境
+2. 执行 `sh bin/install.sh` 安装当前项目环境
+3. 执行脚本 `sh bin/main.sh` 或其他自定义命令运行项目
 
 ## 打包
 ### 一、使用pyinstaller打包
