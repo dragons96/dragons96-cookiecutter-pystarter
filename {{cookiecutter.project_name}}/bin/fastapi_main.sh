@@ -6,6 +6,8 @@ echo "当前项目路径: $PROJECT_DIR"
 # 进入目录
 cd "$PROJECT_DIR"
 echo "切换到项目目录: $PROJECT_DIR"
+echo "拉取最新项目代码"
+git pull
 echo "切换虚拟环境"
 source venv/bin/activate
 echo "开始安装生产环境依赖"
