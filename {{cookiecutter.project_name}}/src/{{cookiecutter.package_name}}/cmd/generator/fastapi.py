@@ -2,7 +2,7 @@ import os
 from {{ cookiecutter.package_name }}.cmd.generator.common import mkdir, create_file, add_poetry_script
 
 
-def generate_fastapi(project_dir: str, package_dir: str, override: bool = False):
+def generate_fastapi(project_dir: str, package_dir: str, override: bool = False, *args, **kwargs):
     """生成fastapi代码模板"""
     def gen_fastapi_dir():
         """生成fastapi目录"""

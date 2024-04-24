@@ -2,7 +2,7 @@ import os
 from {{ cookiecutter.package_name }}.cmd.generator.common import mkdir, create_file, add_poetry_script
 
 
-def generate_flask(project_dir: str, package_dir: str, override: bool = False):
+def generate_flask(project_dir: str, package_dir: str, override: bool = False, *args, **kwargs):
     """生成flask代码模板"""
     def gen_flask_dir():
         """生成flask目录"""
