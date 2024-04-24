@@ -28,13 +28,16 @@ def create_file(filepath: str, content='', encoding='utf-8', override=False):
 
 def add_poetry_script(project_idr: str, script: str):
     """新增poetry启动脚本"""
-    myproject_toml = project_idr + os.sep + 'myproject.toml'
-    if not os.path.exists(myproject_toml):
-        logger.error('myproject.toml文件不存在, 无法添加poetry执行脚本')
+    pyproject_toml = project_idr + os.sep + 'pyproject.toml'
+    if not os.path.exists(pyproject_toml):
+        logger.error('pyproject.toml文件不存在, 无法添加poetry执行脚本')
         return
-    with open(myproject_toml, 'r', encoding='utf-8') as f:
+    with open(pyproject_toml, 'r', encoding='utf-8') as f:
         content = f.read()
+    if script in content:
+        logger.warning('脚本[{}]已存在, 无需重复添加', script)
+        return
     content = content.replace('[tool.poetry.scripts]', f'[tool.poetry.scripts]\n{script}')
-    with open(myproject_toml, 'w', encoding='utf-8') as f:
+    with open(pyproject_toml, 'w', encoding='utf-8') as f:
         f.write(content)
     logger.success('新增poetry执行脚本: [poetry run {}]', script.split('=')[0].strip())
