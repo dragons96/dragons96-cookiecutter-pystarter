@@ -1,16 +1,15 @@
 import os
 import click
 from loguru import logger
+from typing import Optional
 from {{ cookiecutter.package_name }}.cmd.generators import *
 from {{ cookiecutter.package_name }}.config import get_project_dir
 
 
-@click.command()
-@click.argument('template', type=click.Choice(['fastapi', 'flask']))
-@click.option('--override', default=False, help='是否覆盖代码, 不建议覆盖, 若要覆盖请确认覆盖代码是否对业务存在影响, 默认false')
+@click.group()
 @click.version_option(version="1.0.0", help='查看命令版本')
 @click.help_option('-h', '--help', help='查看命令帮助')
-def main(template: str, override: bool) -> None:
+def main() -> None:
     """代码生成命令行工具"""
     project_dir = get_project_dir()
     package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
@@ -22,7 +21,49 @@ def main(template: str, override: bool) -> None:
         logger.info('开始生成[flask]模板代码')
         generate_flask(project_dir, package_dir, override=override)
         logger.success('生成[flask]模板代码完成')
+    elif template == 'task':
+        generate_task(project_dir, package_dir, task_name=, override=override)
 
+
+@main.command()
+@click.option('--override', default=False, help='是否覆盖代码, 不建议覆盖, 若要覆盖请确认覆盖代码是否对业务存在影响, 默认false')
+@click.version_option(version="1.0.0", help='查看命令版本')
+@click.help_option('-h', '--help', help='查看命令帮助')
+def fastapi(override: Optional[bool] = False):
+    project_dir = get_project_dir()
+    package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
+    logger.info('开始生成[fastapi]模板代码')
+    generate_fastapi(project_dir, package_dir, override=override)
+    logger.success('生成[fastapi]模板代码完成')
+
+
+@main.command()
+@click.option('--override', default=False, help='是否覆盖代码, 不建议覆盖, 若要覆盖请确认覆盖代码是否对业务存在影响, 默认false')
+@click.version_option(version="1.0.0", help='查看命令版本')
+@click.help_option('-h', '--help', help='查看命令帮助')
+def flask(override: Optional[bool] = False):
+    project_dir = get_project_dir()
+    package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
+    logger.info('开始生成[flask]模板代码')
+    generate_flask(project_dir, package_dir, override=override)
+    logger.success('生成[flask]模板代码完成')
+
+
+@main.command()
+@click.option('--override', default=False, help='是否覆盖代码, 不建议覆盖, 若要覆盖请确认覆盖代码是否对业务存在影响, 默认false')
+@click.option('--task_class', default=None, help='任务类名, 支持驼峰、下划线名称解析, 生成的文件名下划线分隔, 类名驼峰, 例如: HelloWorld, 生成task模板时必填该参数')
+@click.option('--task_name', default="默认任务", help='任务名称, 中英文任务描述, 默认值: 默认任务')
+@click.version_option(version="1.0.0", help='查看命令版本')
+@click.help_option('-h', '--help', help='查看命令帮助')
+def task(override: Optional[bool] = False,
+         task_class: Optional[str] = None,
+         task_name: Optional[str] = "默认任务"):
+    if not task_class:
+        logger.error('任务类不能为空')
+        return
+    project_dir = get_project_dir()
+    package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
+    generate_task(project_dir, package_dir, task_class=task_class, task_name=task_name, override=override)
 
 if __name__ == "__main__":
     main()
