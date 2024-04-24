@@ -65,5 +65,6 @@ def task(override: Optional[bool] = False,
     package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
     generate_task(project_dir, package_dir, task_class=task_class, task_name=task_name, override=override)
 
+
 if __name__ == "__main__":
     main()
