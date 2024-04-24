@@ -1,5 +1,5 @@
 import os
-from {{ cookiecutter.package_name }}.cmd.generator.common import mkdir, create_file, add_poetry_script
+from {{ cookiecutter.package_name }}.cmd.generators.common import mkdir, create_file, add_poetry_script
 
 
 def generate_flask(project_dir: str, package_dir: str, override: bool = False, *args, **kwargs):
