@@ -15,11 +15,14 @@ def generate_task(project_dir: str, package_dir: str, override: bool = False,
 
     names = extract_names(task_class)
     task_py = task_dir + os.sep + '_'.join(names) + '.py'
+    if names[-1] != 'task':
+        names.append('task')
     custom_task_class = ''.join([(name[0].upper() + name[1:]) if len(name) > 1 else name.upper() for name in names])
     create_file(task_py, '''from typing import Any
 from dragons96_tools.task import {base_task_class}
 
-class {custom_task_class}(base_task_class):
+
+class {custom_task_class}({base_task_class}):
     """自定义任务"""
 
     {async_def_prefix}def _run(self, *args, **kwargs) -> Any:
@@ -28,6 +31,6 @@ class {custom_task_class}(base_task_class):
 
     def _task_name(self) -> str:
         # todo: 任务名称
-        return {task_name}
+        return "{task_name}"
 '''.format(base_task_class='AsyncTask' if is_async else 'Task', custom_task_class=custom_task_class,
-           async_def_prefix='async ' if is_async else '', task_name=task_name))
+           async_def_prefix='async ' if is_async else '', task_name=task_name), override=override)

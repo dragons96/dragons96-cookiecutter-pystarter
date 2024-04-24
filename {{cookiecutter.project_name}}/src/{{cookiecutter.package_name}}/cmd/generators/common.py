@@ -48,6 +48,8 @@ def add_poetry_script(project_idr: str, script: str):
 def extract_names(name: str) -> List[str]:
     """提取名称分段列表"""
     tmp = re.findall(r'[A-Z][a-z0-9]*', name)
+    if not tmp:
+        tmp = name.split('_')
     names = []
     for name in tmp:
         ns = name.lower().split('_')
