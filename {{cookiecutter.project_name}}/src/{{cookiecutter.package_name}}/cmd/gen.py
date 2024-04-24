@@ -22,7 +22,7 @@ def fastapi(override: Optional[bool] = False):
     project_dir = get_project_dir()
     package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
     logger.info('开始生成[fastapi]模板代码')
-    generate_fastapi(project_dir, package_dir, override=override)
+    generate_fastapi(project_dir=project_dir, package_dir=package_dir, override=override)
     logger.success('生成[fastapi]模板代码完成')
 
 
@@ -34,7 +34,7 @@ def flask(override: Optional[bool] = False):
     project_dir = get_project_dir()
     package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
     logger.info('开始生成[flask]模板代码')
-    generate_flask(project_dir, package_dir, override=override)
+    generate_flask(project_dir=project_dir, package_dir=package_dir, override=override)
     logger.success('生成[flask]模板代码完成')
 
 
@@ -52,7 +52,8 @@ def task(override: Optional[bool] = False,
         return
     project_dir = get_project_dir()
     package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
-    generate_task(project_dir, package_dir, task_class=task_class, task_name=task_name, override=override)
+    generate_task(project_dir=project_dir, package_dir=package_dir,
+                  task_class=task_class, task_name=task_name, override=override)
 
 
 if __name__ == "__main__":
