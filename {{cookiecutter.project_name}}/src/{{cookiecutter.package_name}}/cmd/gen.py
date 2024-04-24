@@ -11,18 +11,7 @@ from {{ cookiecutter.package_name }}.config import get_project_dir
 @click.help_option('-h', '--help', help='查看命令帮助')
 def main() -> None:
     """代码生成命令行工具"""
-    project_dir = get_project_dir()
-    package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
-    if template == 'fastapi':
-        logger.info('开始生成[fastapi]模板代码')
-        generate_fastapi(project_dir, package_dir, override=override)
-        logger.success('生成[fastapi]模板代码完成')
-    elif template == 'flask':
-        logger.info('开始生成[flask]模板代码')
-        generate_flask(project_dir, package_dir, override=override)
-        logger.success('生成[flask]模板代码完成')
-    elif template == 'task':
-        generate_task(project_dir, package_dir, task_name=, override=override)
+    pass
 
 
 @main.command()
