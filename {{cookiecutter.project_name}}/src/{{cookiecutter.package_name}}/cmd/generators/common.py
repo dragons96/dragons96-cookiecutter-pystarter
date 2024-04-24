@@ -1,5 +1,7 @@
 import os
 from loguru import logger
+from typing import List
+import re
 
 
 def mkdir(dir_path: str):
@@ -41,3 +43,14 @@ def add_poetry_script(project_idr: str, script: str):
     with open(pyproject_toml, 'w', encoding='utf-8') as f:
         f.write(content)
     logger.success('新增poetry执行脚本: [poetry run {}]', script.split('=')[0].strip())
+
+
+def extract_names(name: str) -> List[str]:
+    """提取名称分段列表"""
+    tmp = re.findall(r'[A-Z][a-z0-9]*', name)
+    names = []
+    for name in tmp:
+        ns = name.lower().split('_')
+        for n in ns:
+            names.extend(n.split('-'))
+    return names
