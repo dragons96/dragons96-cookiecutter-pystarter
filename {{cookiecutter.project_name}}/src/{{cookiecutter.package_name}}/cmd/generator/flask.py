@@ -1,8 +1,8 @@
 import os
-from {{ cookiecutter.package_name }}.cmd.generator.common import mkdir, create_file
+from {{ cookiecutter.package_name }}.cmd.generator.common import mkdir, create_file, add_poetry_script
 
 
-def generate_flask(package_dir: str, override: bool = False):
+def generate_flask(project_dir: str, package_dir: str, override: bool = False):
     """生成flask代码模板"""
     def gen_flask_dir():
         """生成flask目录"""
@@ -84,6 +84,7 @@ if __name__ == "__main__":
     multiprocessing.freeze_support()
     main()
 ''', override=override)
+        add_poetry_script(project_dir, 'flask_main = "{{cookiecutter.package_name}}.cmd.flask_main:main"')
 
     gen_flask_dir()
     gen_flask_cmd()
