@@ -26,7 +26,7 @@ app = Flask(__name__)
 @app.get('/')
 def hello():
     logger.info('Hello {{cookiecutter.project_name}} by Flask!')
-    return R.ok(data='Hello {{cookiecutter.project_name}} by Flask!')
+    return R.ok(data='Hello {{cookiecutter.project_name}} by Flask!').model_dump()
 
 
 # wsgi 转 asgi
