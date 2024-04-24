@@ -23,14 +23,10 @@
 2. 安装相关依赖: `poetry add fastapi uvicorn[standard]`
 3. 运行 `poetry run fastapi_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/fastapi_main.py`
 
-PS: 若不需要可删除`src/{{cookiecutter.package_name}}/cmd/fastapi_main.py`文件与`src/{{cookiecutter.package_name}}/fastapi`包
-
 ## Flask 配置
 1. 生成模板代码: `poetry run gen flask`
 2. 安装相关依赖: `poetry add flask uvicorn[standard]`
 3. 运行 `poetry run flask_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/flask_main.py`
-
-PS: 若不需要可删除`src/{{cookiecutter.package_name}}/cmd/flask_main.py`文件与`src/{{cookiecutter.package_name}}/flask`包
 
 ## 环境变量
 1. PROJECT_DIR: 项目路径, 通常无需设置, pyinstaller打包后需设置
