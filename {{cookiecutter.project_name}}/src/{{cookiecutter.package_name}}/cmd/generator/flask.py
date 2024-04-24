@@ -1,4 +1,43 @@
 import os
+from {{ cookiecutter.package_name }}.cmd.generator.common import mkdir, create_file
+
+
+def generate_flask(package_dir: str, override: bool = False):
+    """生成flask代码模板"""
+    def gen_flask_dir():
+        """生成flask目录"""
+        flask_dir = package_dir + os.sep + 'flask'
+        flask_init_py = flask_dir + os.sep + '__init__.py'
+        flask_app_py = flask_dir + os.sep + 'app.py'
+        mkdir(flask_dir)
+        create_file(flask_init_py, override=override)
+        create_file(flask_app_py, '''from flask import Flask
+from dragons96_tools.models import R
+from uvicorn.middleware.wsgi import WSGIMiddleware
+from {{ cookiecutter.package_name }}.logger import setup, setup_uvicorn
+from loguru import logger
+
+# 设置日志文件
+setup('flask_{{ cookiecutter.project_name }}.log')
+setup_uvicorn('flask_uvicorn_{{ cookiecutter.project_name }}.log')
+app = Flask(__name__)
+
+
+@app.get('/')
+def hello():
+    logger.info('Hello {{cookiecutter.project_name}} by Flask!')
+    return R.ok(data='Hello {{cookiecutter.project_name}} by Flask!')
+
+
+# wsgi 转 asgi
+asgi_app = WSGIMiddleware(app)
+''', override=override)
+
+    def gen_flask_cmd():
+        """生成flask命令行工具"""
+        cmd_dir = package_dir + os.sep + 'cmd'
+        flask_cmd_main_py = cmd_dir + os.sep + 'flask_main.py'
+        create_file(flask_cmd_main_py, '''import os
 import multiprocessing
 import click
 from loguru import logger
@@ -44,3 +83,7 @@ if __name__ == "__main__":
     # windows 多进程需要执行该方法, linux 与 mac 执行无效不影响
     multiprocessing.freeze_support()
     main()
+''', override=override)
+
+    gen_flask_dir()
+    gen_flask_cmd()
