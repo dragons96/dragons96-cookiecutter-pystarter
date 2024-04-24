@@ -19,14 +19,16 @@
 3. 使用`poetry run xxx`执行开发的cmd命令行工具
 
 ## FastAPI 配置
-1. poetry add fastapi uvicorn[standard]
-2. 运行 `poetry run fastapi_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/fastapi_main.py`
+1. 生成模板代码: `poetry run gen fastapi`
+2. 安装相关依赖: `poetry add fastapi uvicorn[standard]`
+3. 运行 `poetry run fastapi_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/fastapi_main.py`
 
 PS: 若不需要可删除`src/{{cookiecutter.package_name}}/cmd/fastapi_main.py`文件与`src/{{cookiecutter.package_name}}/fastapi`包
 
 ## Flask 配置
-1. poetry add flask uvicorn[standard]
-2. 运行 `poetry run flask_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/flask_main.py`
+1. 生成模板代码: `poetry run gen flask`
+2. 安装相关依赖: `poetry add flask uvicorn[standard]`
+3. 运行 `poetry run flask_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/flask_main.py`
 
 PS: 若不需要可删除`src/{{cookiecutter.package_name}}/cmd/flask_main.py`文件与`src/{{cookiecutter.package_name}}/flask`包
 
