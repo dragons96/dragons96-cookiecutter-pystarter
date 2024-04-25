@@ -14,6 +14,7 @@ def generate_django(project_dir: str, package_dir: str, override: bool = False, 
         wsgi_py = django_dir + os.sep + 'wsgi.py'
         settings_py = django_dir + os.sep + 'settings.py'
         urls_py = django_dir + os.sep + 'urls.py'
+        manage_py = django_dir + os.sep + 'manage.py'
         mkdir(django_dir)
         create_file(django_init_py, override=override)
         create_file(asgi_py, '''"""
@@ -198,6 +199,28 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 '''.format(name=name), override=override)
+        create_file(manage_py, '''import os
+import sys
+from typing import List
+
+
+def run(django_args: List[str]):
+    # 启动django
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', '{name}.django.settings')
+    try:
+        from django.core.management import execute_from_command_line
+    except ImportError as exc:
+        raise ImportError(
+            "Couldn't import Django. Are you sure it's installed and "
+            "available on your PYTHONPATH environment variable? Did you "
+            "forget to activate a virtual environment?"
+        ) from exc
+    execute_from_command_line(django_args)
+
+
+if __name__ == '__main__':
+    run(sys.argv)
+'''.format(name=name), override=override)
 
     def gen_django_cmd():
         """生成django cmd命令行工具"""
@@ -210,7 +233,7 @@ from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg
 from {{ cookiecutter.package_name }}.logger import setup
 from typing import Optional
-from dragons96_tools.env import get_env
+from {{ cookiecutter.package_name }}.django.manage import run
 
 
 @click.command()
@@ -225,7 +248,7 @@ def main(project_dir: Optional[str] = None,
          env: Optional[str] = 'dev',
          log_level: Optional[str] = 'INFO',
          django_args: Optional[str] = '') -> None:
-    """Demo FastAPI cmd."""
+    """Demo Django cmd."""
     if project_dir:
         os.environ['PROJECT_DIR'] = project_dir
     if env:
@@ -233,24 +256,18 @@ def main(project_dir: Optional[str] = None,
     setup('flask_{}.log'.format(cfg().project_name), level=log_level)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     # 启动django
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', '{{cookiecutter.package_name}}.django.settings')
-    try:
-        from django.core.management import execute_from_command_line
-    except ImportError as exc:
-        raise ImportError(
-            "Couldn't import Django. Are you sure it's installed and "
-            "available on your PYTHONPATH environment variable? Did you "
-            "forget to activate a virtual environment?"
-        ) from exc
     django_args_list = [item.strip() for item in django_args.split(' ') if item.strip()]
+    # django 基于sys.argv[0]处理, 这里覆盖sys.argv[0]为当前文件来保证poetry正常运行
+    sys.argv[0] = __file__
     django_args_list = [sys.argv[0], *django_args_list]
-    execute_from_command_line(django_args_list)
+    logger.info('[django]启动参数: {}', django_args_list)
+    run(django_args_list)
 
 
 if __name__ == "__main__":
     main()
 ''', override=override)
+        add_poetry_script(project_dir, 'django_main = "{{cookiecutter.package_name}}.cmd.django_main:main"')
 
-    add_poetry_script(project_dir, 'django_main = "{{cookiecutter.package_name}}.cmd.django_main:main"')
     gen_django_dir()
     gen_django_cmd()
