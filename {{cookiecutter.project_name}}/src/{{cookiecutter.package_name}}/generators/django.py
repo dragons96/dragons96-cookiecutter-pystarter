@@ -204,6 +204,7 @@ urlpatterns = [
         cmd_dir = package_dir + os.sep + 'cmd'
         django_cmd_main_py = cmd_dir + os.sep + 'django_main.py'
         create_file(django_cmd_main_py, '''import os
+import sys
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg
@@ -244,6 +245,7 @@ def main(project_dir: Optional[str] = None,
             "forget to activate a virtual environment?"
         ) from exc
     django_args_list = [item.strip() for item in django_args.split(' ') if item.strip()]
+    django_args_list = [sys.argv[0], *django_args_list]
     execute_from_command_line(django_args_list)
 
 
