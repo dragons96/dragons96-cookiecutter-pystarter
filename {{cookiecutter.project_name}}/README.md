@@ -28,6 +28,18 @@
 2. 安装相关依赖: `poetry add flask uvicorn[standard]`
 3. 运行 `poetry run flask_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/flask_main.py`
 
+## Scrapy 配置
+1. 生成模板代码: `poetry run gen scrapy`
+2. 安装相关依赖: `poetry add scrapy`
+3. 使用scrapy命令 `poetry run scrapy xxx`
+- 生成xxx爬虫: `poetry run scrapy genspider xxx xxx.com`
+- 执行xxx爬虫: `poetry run scrapy crawl xxx`
+
+## 任务生成
+1. 生成任务代码: `poetry run gen task --task_class xxx --task_name 示例任务`
+- task_class: 任务类名
+- task_name: 任务名称
+
 ## 环境变量
 1. PROJECT_DIR: 项目路径, 通常无需设置, pyinstaller打包后需设置
 2. dragons96_tools包提供的ENV: 当前环境, dev=开发环境, test=测试环境, pro=生产环境
