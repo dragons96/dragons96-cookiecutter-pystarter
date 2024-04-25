@@ -229,8 +229,6 @@ def main(project_dir: Optional[str] = None,
         os.environ['PROJECT_DIR'] = project_dir
     if env:
         os.environ['ENV'] = env
-    if reload is None:
-        reload = get_env().is_dev()
     setup('flask_{}.log'.format(cfg().project_name), level=log_level)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     # 启动django
@@ -252,5 +250,6 @@ if __name__ == "__main__":
     main()
 ''', override=override)
 
+    add_poetry_script(project_dir, 'django_main = "{{cookiecutter.package_name}}.cmd.django_main:main"')
     gen_django_dir()
     gen_django_cmd()
