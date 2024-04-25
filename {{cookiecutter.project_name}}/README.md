@@ -21,17 +21,17 @@
 ## FastAPI 配置
 1. 生成模板代码: `poetry run gen fastapi`
 2. 安装相关依赖: `poetry add fastapi uvicorn[standard]`
-3. 运行 `poetry run fastapi_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/fastapi_main.py`
+3. 运行 `poetry run fastapi`, 对应 `src/{{ cookiecutter.package_name }}/cmd/fastapi_main.py`
 
 ## Flask 配置
 1. 生成模板代码: `poetry run gen flask`
 2. 安装相关依赖: `poetry add flask uvicorn[standard]`
-3. 运行 `poetry run flask_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/flask_main.py`
+3. 运行 `poetry run flask`, 对应 `src/{{ cookiecutter.package_name }}/cmd/flask_main.py`
 
 ## Django 配置
 1. 生成模板代码: `poetry run gen django`
 2. 安装相关依赖: `poetry add django==4.2.11` (由于django>=5.0需要python>=3.10, 若要安装django5.x版本需要修改pyproject.toml中的python版本限制)
-3. 运行 `poetry run django_main --django_args "runserver"`, 对应 `src/{{ cookiecutter.package_name}}/cmd/django_main.py`
+3. 运行 `poetry run django --django_args "runserver"`, 对应 `src/{{ cookiecutter.package_name}}/cmd/django_main.py`
 4. 其他django命令用法: `poetry run django_main --django_args "{runserver|createsuperuser|migrate|...} ..."`
 
 ## Scrapy 配置

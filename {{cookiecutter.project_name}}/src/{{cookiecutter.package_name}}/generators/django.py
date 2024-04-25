@@ -267,7 +267,7 @@ def main(project_dir: Optional[str] = None,
 if __name__ == "__main__":
     main()
 ''', override=override)
-        add_poetry_script(project_dir, 'django_main = "{{cookiecutter.package_name}}.cmd.django_main:main"')
+        add_poetry_script(project_dir, 'django = "{{cookiecutter.package_name}}.cmd.django_main:main"')
 
     gen_django_dir()
     gen_django_cmd()

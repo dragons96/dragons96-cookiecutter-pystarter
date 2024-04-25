@@ -87,7 +87,7 @@ if __name__ == "__main__":
     multiprocessing.freeze_support()
     main()
 ''', override=override)
-        add_poetry_script(project_dir, 'fastapi_main = "{{cookiecutter.package_name}}.cmd.fastapi_main:main"')
+        add_poetry_script(project_dir, 'fastapi = "{{cookiecutter.package_name}}.cmd.fastapi_main:main"')
 
         bin_dir = project_dir + os.sep + 'bin'
         bin_file = bin_dir + os.sep + 'fastapi_main.sh'

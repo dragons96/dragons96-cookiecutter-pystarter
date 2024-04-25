@@ -84,7 +84,7 @@ if __name__ == "__main__":
     multiprocessing.freeze_support()
     main()
 ''', override=override)
-        add_poetry_script(project_dir, 'flask_main = "{{cookiecutter.package_name}}.cmd.flask_main:main"')
+        add_poetry_script(project_dir, 'flask = "{{cookiecutter.package_name}}.cmd.flask_main:main"')
 
         bin_dir = project_dir + os.sep + 'bin'
         bin_file = bin_dir + os.sep + 'flask_main.sh'
