@@ -30,7 +30,6 @@ class {custom_task_class}({base_task_class}):
         pass
 
     def _task_name(self) -> str:
-        # todo: 任务名称
         return "{task_name}"
 '''.format(base_task_class='AsyncTask' if is_async else 'Task', custom_task_class=custom_task_class,
            async_def_prefix='async ' if is_async else '', task_name=task_name), override=override)
