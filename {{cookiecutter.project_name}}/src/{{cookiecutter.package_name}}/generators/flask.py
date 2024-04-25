@@ -106,7 +106,7 @@ echo "安装生产环境依赖完成"
 # 执行命令
 echo "开始执行命令"
 # 执行命令 --workers 工作进程数, 正式环境可根据CPU核数设置
-nohup poetry run flask_main --host 0.0.0.0 --port 8000 --env pro --workers 4 >> /dev/null 2>&1 &
+nohup poetry run flask --host 0.0.0.0 --port 8000 --env pro --workers 4 >> /dev/null 2>&1 &
 echo "执行成功"
 echo "退出虚拟环境"
 deactivate
