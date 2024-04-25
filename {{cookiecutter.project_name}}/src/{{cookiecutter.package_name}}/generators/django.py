@@ -63,9 +63,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from {{cookiecutter.package_name}}.config import get_project_dir
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = ${project_dir}
+BASE_DIR = Path(get_project_dir())
 
 
 # Quick-start development settings - unsuitable for production
