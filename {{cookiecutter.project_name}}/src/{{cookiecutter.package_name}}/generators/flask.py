@@ -87,7 +87,7 @@ if __name__ == "__main__":
         add_poetry_script(project_dir, 'flask = "{{cookiecutter.package_name}}.cmd.flask_main:main"')
 
         bin_dir = project_dir + os.sep + 'bin'
-        bin_file = bin_dir + os.sep + 'flask_main.sh'
+        bin_file = bin_dir + os.sep + 'flask.sh'
         create_file(bin_file, '''# 获取脚本文件目录
 BIN_DIR=$(dirname "$(readlink -f "$0")")
 # 获取项目目录
@@ -106,7 +106,7 @@ echo "安装生产环境依赖完成"
 # 执行命令
 echo "开始执行命令"
 # 执行命令 --workers 工作进程数, 正式环境可根据CPU核数设置
-nohup poetry run flask_main --host 0.0.0.0 --port 8000 --env dev --workers 4 >> /dev/null 2>&1 &
+nohup poetry run flask_main --host 0.0.0.0 --port 8000 --env pro --workers 4 >> /dev/null 2>&1 &
 echo "执行成功"
 echo "退出虚拟环境"
 deactivate
