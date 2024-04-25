@@ -48,7 +48,7 @@ def task(override: Optional[bool] = False,
          task_class: Optional[str] = None,
          task_name: Optional[str] = "默认任务"):
     if not task_class:
-        logger.error('任务类不能为空')
+        logger.error('[--task_class]参数不能为空')
         return
     project_dir = get_project_dir()
     package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
