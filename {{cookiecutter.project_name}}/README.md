@@ -28,6 +28,11 @@
 2. 安装相关依赖: `poetry add flask uvicorn[standard]`
 3. 运行 `poetry run flask_main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/flask_main.py`
 
+## Django 配置
+1. 生成模板代码: `poetry run gen django`
+2. 安装相关依赖: `poetry add django==4.2.11` (由于django>=5.0需要python>=3.10, 若要安装django5.x版本需要修改pyproject.toml中的python版本限制)
+3. 运行 `poetry run django_main --django_args "runserver"`, 对应 `src/{{ cookiecutter.package_name}}/cmd/django_main.py`
+
 ## Scrapy 配置
 1. 生成模板代码: `poetry run gen scrapy`
 2. 安装相关依赖: `poetry add scrapy`
