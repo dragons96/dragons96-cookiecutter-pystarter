@@ -32,7 +32,7 @@
 1. 生成模板代码: `poetry run gen django`
 2. 安装相关依赖: `poetry add django==4.2.11` (由于django>=5.0需要python>=3.10, 若要安装django5.x版本需要修改pyproject.toml中的python版本限制)
 3. 运行 `poetry run django --django_args "runserver"`, 对应 `src/{{ cookiecutter.package_name}}/cmd/django_main.py`
-4. 其他django命令用法: `poetry run django_main --django_args "{runserver|createsuperuser|migrate|...} ..."`
+4. 其他django命令用法: `poetry run django --django_args "{runserver|createsuperuser|migrate|...} ..."`
 
 ## Scrapy 配置
 1. 生成模板代码: `poetry run gen scrapy`
