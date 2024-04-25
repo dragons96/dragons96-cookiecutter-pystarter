@@ -66,5 +66,15 @@ def scrapy(override: Optional[bool] = False):
     generate_scrapy(project_dir=project_dir, package_dir=package_dir, override=override)
 
 
+@main.command()
+@click.option('--override', default=False, help='是否覆盖代码, 不建议覆盖, 若要覆盖请确认覆盖代码是否对业务存在影响, 默认false')
+@click.version_option(version="1.0.0", help='查看命令版本')
+@click.help_option('-h', '--help', help='查看命令帮助')
+def django(override: Optional[bool] = False):
+    project_dir = get_project_dir()
+    package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
+    generate_django(project_dir=project_dir, package_dir=package_dir, override=override)
+
+
 if __name__ == "__main__":
     main()
