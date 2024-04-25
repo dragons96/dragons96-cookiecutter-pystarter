@@ -66,5 +66,5 @@ def str_format(text: str, **kwargs):
         return text
     for express_name in express_names:
         if express_name in kwargs:
-            text = text.replace('${' + express_name + '}', kwargs[express_name])
+            text = text.replace('${' + express_name + '}', str(kwargs[express_name]))
     return text
