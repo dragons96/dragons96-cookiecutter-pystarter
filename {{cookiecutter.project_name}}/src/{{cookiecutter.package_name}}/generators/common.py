@@ -49,10 +49,22 @@ def extract_names(name: str) -> List[str]:
     """提取名称分段列表"""
     tmp = re.findall(r'[A-Z][a-z0-9]*', name)
     if not tmp:
-        tmp = name.split('_')
+        tmp = [name]
     names = []
     for name in tmp:
         ns = name.lower().split('_')
         for n in ns:
             names.extend(n.split('-'))
     return names
+
+
+def str_format(text: str, **kwargs):
+    """字符串格式化, 变量使用${}包裹"""
+    pattern = r'\${([^}]*)}'
+    express_names = re.findall(pattern, text)
+    if not express_names:
+        return text
+    for express_name in express_names:
+        if express_name in kwargs:
+            text = text.replace(f'${{{express_name}}}', kwargs[express_name])
+    return text

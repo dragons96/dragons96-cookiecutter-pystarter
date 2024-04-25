@@ -7,7 +7,7 @@ def generate_task(project_dir: str, package_dir: str, override: bool = False,
                   task_name: str = None,
                   is_async: bool = False,
                   *args, **kwargs):
-    """生成任务代码模板"""
+    """生成任务模板代码"""
     task_dir = package_dir + os.sep + 'tasks'
     task_init_py = task_dir + os.sep + '__init__.py'
     mkdir(task_dir)
@@ -23,7 +23,7 @@ from dragons96_tools.task import {base_task_class}
 
 
 class {custom_task_class}({base_task_class}):
-    """自定义任务"""
+    """{task_name}"""
 
     {async_def_prefix}def _run(self, *args, **kwargs) -> Any:
         # todo: 任务具体逻辑

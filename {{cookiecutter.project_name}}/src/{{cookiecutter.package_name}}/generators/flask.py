@@ -3,7 +3,7 @@ from {{ cookiecutter.package_name }}.generators.common import mkdir, create_file
 
 
 def generate_flask(project_dir: str, package_dir: str, override: bool = False, *args, **kwargs):
-    """生成flask代码模板"""
+    """生成flask模板代码"""
     def gen_flask_dir():
         """生成flask目录"""
         flask_dir = package_dir + os.sep + 'flask'

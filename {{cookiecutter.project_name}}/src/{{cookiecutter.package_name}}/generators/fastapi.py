@@ -3,7 +3,7 @@ from {{ cookiecutter.package_name }}.generators.common import mkdir, create_file
 
 
 def generate_fastapi(project_dir: str, package_dir: str, override: bool = False, *args, **kwargs):
-    """生成fastapi代码模板"""
+    """生成fastapi模板代码"""
     def gen_fastapi_dir():
         """生成fastapi目录"""
         fastapi_dir = package_dir + os.sep + 'fastapi'
