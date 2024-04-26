@@ -2,7 +2,7 @@
 import pytest
 from click.testing import CliRunner
 
-from {{cookiecutter.package_name}} import __main__
+from {{cookiecutter.package_name}}.cmd.main import __main__
 
 
 @pytest.fixture
