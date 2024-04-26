@@ -63,6 +63,15 @@ def get_project_dir() -> str:
     return os.environ.get('PROJECT_DIR', os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 
+def get_package_dir() -> str:
+    """
+    获取主包目录位置
+    Returns:
+        主包目录路径
+    """
+    return get_project_dir() + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
+
+
 def cfg() -> Config:
     """
     获取配置对象

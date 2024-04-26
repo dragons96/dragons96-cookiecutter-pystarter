@@ -3,7 +3,7 @@ import click
 from loguru import logger
 from typing import Optional
 from {{ cookiecutter.package_name }}.generators import *
-from {{ cookiecutter.package_name }}.config import get_project_dir
+from {{ cookiecutter.package_name }}.config import get_project_dir, get_package_dir
 
 
 @click.group()
@@ -20,7 +20,7 @@ def main() -> None:
 @click.help_option('-h', '--help', help='查看命令帮助')
 def fastapi(override: Optional[bool] = False):
     project_dir = get_project_dir()
-    package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
+    package_dir = get_package_dir()
     logger.info('开始生成[fastapi]模板代码')
     generate_fastapi(project_dir=project_dir, package_dir=package_dir, override=override)
     logger.success('生成[fastapi]模板代码完成')
@@ -32,7 +32,7 @@ def fastapi(override: Optional[bool] = False):
 @click.help_option('-h', '--help', help='查看命令帮助')
 def flask(override: Optional[bool] = False):
     project_dir = get_project_dir()
-    package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
+    package_dir = get_package_dir()
     logger.info('开始生成[flask]模板代码')
     generate_flask(project_dir=project_dir, package_dir=package_dir, override=override)
     logger.success('生成[flask]模板代码完成')
@@ -51,7 +51,7 @@ def task(override: Optional[bool] = False,
         logger.error('[--task_class]参数不能为空')
         return
     project_dir = get_project_dir()
-    package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
+    package_dir = get_package_dir()
     generate_task(project_dir=project_dir, package_dir=package_dir,
                   task_class=task_class, task_name=task_name, override=override)
 
@@ -62,7 +62,7 @@ def task(override: Optional[bool] = False,
 @click.help_option('-h', '--help', help='查看命令帮助')
 def scrapy(override: Optional[bool] = False):
     project_dir = get_project_dir()
-    package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
+    package_dir = get_package_dir()
     generate_scrapy(project_dir=project_dir, package_dir=package_dir, override=override)
 
 
@@ -72,7 +72,7 @@ def scrapy(override: Optional[bool] = False):
 @click.help_option('-h', '--help', help='查看命令帮助')
 def django(override: Optional[bool] = False):
     project_dir = get_project_dir()
-    package_dir = project_dir + os.sep + 'src' + os.sep + '{{cookiecutter.package_name}}'
+    package_dir = get_package_dir()
     generate_django(project_dir=project_dir, package_dir=package_dir, override=override)
 
 
