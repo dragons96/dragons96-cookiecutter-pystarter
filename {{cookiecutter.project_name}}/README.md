@@ -63,7 +63,6 @@
 10. `src/{{cookiecutter.package_name}}/db.py`: 数据库工具, 通过该工具可获取数据库连接执行数据库相关操作
 11. `src/{{cookiecutter.package_name}}/logger.py`: 日志工具, 主要将日志序列化统一格式至日志文件中便于收集分析
 12. `tests/`: 测试代码
-13.
 
 ## 功能说明
 ### 1.配置管理
