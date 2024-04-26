@@ -2,7 +2,7 @@
 import pytest
 from click.testing import CliRunner
 
-from {{cookiecutter.package_name}}.cmd.main import __main__
+from {{cookiecutter.package_name}}.cmd.main import main
 
 
 @pytest.fixture
@@ -13,5 +13,5 @@ def runner() -> CliRunner:
 
 def test_main_succeeds(runner: CliRunner) -> None:
     """It exits with a status code of zero."""
-    result = runner.invoke(__main__.main)
+    result = runner.invoke(main)
     assert result.exit_code == 0
