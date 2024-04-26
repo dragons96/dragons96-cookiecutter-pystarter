@@ -50,6 +50,21 @@
 1. PROJECT_DIR: 项目路径, 通常无需设置, pyinstaller打包后需设置
 2. dragons96_tools包提供的ENV: 当前环境, dev=开发环境, test=测试环境, pro=生产环境
 
+## 项目结构说明
+1. `bin/`: 项目运行脚本
+2. `config/`: 项目配置文件
+3. `docs/`: 项目文档
+4. `src/`: 项目源码
+5. `src/{{cookiecutter.package_name}}`: 项目源码主包, 所有代码均放在该包下
+6. `src/{{cookiecutter.package_name}}/cmd`: 代码命令行入口
+7. `src/{{cookiecutter.package_name}}/generators/`: 代码生成工具, 可自定义代码生成工具
+8. `src/{{cookiecutter.package_name}}/models`: 数据模型, 包含配置数据模型, 常量数据模型, 数据库模型等均放在该包下
+9. `src/{{cookiecutter.package_name}}/config.py`: 配置工具, 通过该工具可获取配置信息
+10. `src/{{cookiecutter.package_name}}/db.py`: 数据库工具, 通过该工具可获取数据库连接执行数据库相关操作
+11. `src/{{cookiecutter.package_name}}/logger.py`: 日志工具, 主要将日志序列化统一格式至日志文件中便于收集分析
+12. `tests/`: 测试代码
+13.
+
 ## 功能说明
 ### 1.配置管理
 1. `config/application.yml` 配置内容, `src/{{ cookiecutter.package_name }}/models/config.py` 里更新`Config`类对应的属性
