@@ -9,13 +9,3 @@ services:
     image: {{cookiecutter.project_name}}_main:latest
     volumes:
       - ".:/app"
-  fastapi:
-    container_name: {{cookiecutter.project_name}}_fastapi
-    build:
-      context: .
-      dockerfile: Dockerfile.fastapi
-    image: {{cookiecutter.project_name}}_fastapi:latest
-    volumes:
-      - ".:/app"
-    ports:
-      - "8000:8000"
