@@ -310,6 +310,8 @@ RUN poetry lock
 
 RUN poetry install --only main
 
+RUN poetry add django
+
 CMD ["poetry", "run", "django", "--env", "pro", "--django_args", "runserver 0.0.0.0:8000"]
 ''', override=override)
         add_docker_compose_script(project_dir, '''  django:

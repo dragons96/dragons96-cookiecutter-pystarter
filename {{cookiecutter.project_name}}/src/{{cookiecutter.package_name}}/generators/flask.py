@@ -126,6 +126,8 @@ RUN poetry lock
 
 RUN poetry install --only main
 
+RUN poetry add flask uvicorn[standard]
+
 CMD ["poetry", "run", "flask", "--env", "pro", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
 ''', override=override)
         add_docker_compose_script(project_dir, '''  flask:
