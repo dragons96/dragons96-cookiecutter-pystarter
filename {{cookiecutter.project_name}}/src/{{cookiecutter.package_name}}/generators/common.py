@@ -55,7 +55,7 @@ services:
         logger.success('docker-compose.yml文件不存在, 创建docker-compose.yml文件')
     with open(docker_compose_yml, 'r', encoding='utf-8') as f:
         content = f.read()
-    service_name = script.split('\n')[0].strip().strip('\r')
+    service_name = script.split('\n')[0].strip().strip('\r').strip(':')
     if service_name in content:
         logger.warning('服务[{}]已存在, 无需重复添加, 忽略', service_name)
         return
