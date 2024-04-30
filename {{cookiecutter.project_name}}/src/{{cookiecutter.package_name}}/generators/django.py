@@ -310,7 +310,7 @@ RUN poetry lock
 
 RUN poetry install --only main
 
-RUN poetry add django
+RUN poetry add django==4.2.11
 
 CMD ["poetry", "run", "django", "--env", "pro", "--django_args", "runserver 0.0.0.0:8000"]
 ''', override=override)
