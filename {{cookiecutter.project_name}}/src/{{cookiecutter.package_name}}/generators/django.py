@@ -324,6 +324,8 @@ CMD ["poetry", "run", "django", "--env", "pro", "--django_args", "runserver 0.0.
       - ".:/app"
     ports:
       - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
 ''')
 
     gen_django_dir()

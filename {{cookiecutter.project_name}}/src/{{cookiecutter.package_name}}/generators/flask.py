@@ -139,7 +139,10 @@ CMD ["poetry", "run", "flask", "--env", "pro", "--host", "0.0.0.0", "--port", "8
     volumes:
       - ".:/app"
     ports:
-      - "8000:8000"''')
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+''')
 
     gen_flask_dir()
     gen_flask_cmd()

@@ -143,7 +143,10 @@ CMD ["poetry", "run", "fastapi", "--env", "pro", "--host", "0.0.0.0", "--port", 
     volumes:
       - ".:/app"
     ports:
-      - "8000:8000"''')
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+''')
 
     gen_fastapi_dir()
     gen_fastapi_cmd()
