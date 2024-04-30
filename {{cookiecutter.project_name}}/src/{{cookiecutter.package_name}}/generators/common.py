@@ -28,9 +28,9 @@ def create_file(filepath: str, content='', encoding='utf-8', override=False):
     logger.warning('文件已存在: {}, 忽略', filepath)
 
 
-def add_poetry_script(project_idr: str, script: str):
+def add_poetry_script(project_dir: str, script: str):
     """新增poetry启动脚本"""
-    pyproject_toml = project_idr + os.sep + 'pyproject.toml'
+    pyproject_toml = project_dir + os.sep + 'pyproject.toml'
     if not os.path.exists(pyproject_toml):
         logger.error('pyproject.toml文件不存在, 无法添加poetry执行脚本')
         return
@@ -43,6 +43,26 @@ def add_poetry_script(project_idr: str, script: str):
     with open(pyproject_toml, 'w', encoding='utf-8') as f:
         f.write(content)
     logger.success('新增poetry执行脚本: [poetry run {}]', script.split('=')[0].strip())
+
+
+def add_docker_compose_script(project_dir: str, script: str):
+    """新增docker-compose启动脚本"""
+    docker_compose_yml = project_dir + os.sep + 'docker-compose.yml'
+    if not os.path.exists(docker_compose_yml):
+        create_file(docker_compose_yml, """version: '3'
+services:
+""")
+        logger.success('docker-compose.yml文件不存在, 创建docker-compose.yml文件')
+    with open(docker_compose_yml, 'r', encoding='utf-8') as f:
+        content = f.read()
+    service_name = script.split('\n')[0].strip().strip('\r')
+    if service_name in content:
+        logger.warning('服务[{}]已存在, 无需重复添加, 忽略', service_name)
+        return
+    content = content.replace('\nservices:', f'\nservices:\n{script}')
+    with open(docker_compose_yml, 'w', encoding='utf-8') as f:
+        f.write(content)
+    logger.success('新增docker-compose服务: {}', service_name)
 
 
 def extract_names(name: str) -> List[str]:

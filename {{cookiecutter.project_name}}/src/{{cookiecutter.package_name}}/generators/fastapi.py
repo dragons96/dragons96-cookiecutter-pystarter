@@ -1,5 +1,5 @@
 import os
-from {{ cookiecutter.package_name }}.generators.common import mkdir, create_file, add_poetry_script
+from {{ cookiecutter.package_name }}.generators.common import mkdir, create_file, add_poetry_script, add_docker_compose_script
 
 
 def generate_fastapi(project_dir: str, package_dir: str, override: bool = False, *args, **kwargs):
@@ -114,6 +114,34 @@ echo "执行成功"
 echo "退出虚拟环境"
 deactivate
 ''')
+
+        dockerfile_file = project_dir + os.sep + 'Dockerfile.fastapi'
+        create_file(dockerfile_file, '''FROM python:3.9
+
+WORKDIR /app
+
+COPY . /app
+
+RUN pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
+
+RUN pip install --upgrade poetry
+
+RUN poetry lock
+
+RUN poetry install --only main
+
+CMD ["poetry", "run", "fastapi", "--env", "pro", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+''', override=override)
+        add_docker_compose_script(project_dir, '''  fastapi:
+    container_name: {{cookiecutter.project_name}}_fastapi
+    build:
+      context: .
+      dockerfile: Dockerfile.fastapi
+    image: {{cookiecutter.project_name}}_fastapi:latest
+    volumes:
+      - ".:/app"
+    ports:
+      - "8000:8000"''')
 
     gen_fastapi_dir()
     gen_fastapi_cmd()

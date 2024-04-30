@@ -1,0 +1,15 @@
+FROM python:3.9
+
+WORKDIR /app
+
+COPY . /app
+
+RUN pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
+
+RUN pip install --upgrade poetry
+
+RUN poetry lock
+
+RUN poetry install --only main
+
+CMD ["poetry", "run", "main", "--env", "pro"]

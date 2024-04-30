@@ -15,7 +15,7 @@ poetry install --only main
 echo "安装生产环境依赖完成"
 # 执行命令
 echo "开始执行命令"
-nohup poetry run main --env dev >> /dev/null 2>&1 &
+poetry run main --env pro >> /dev/null 2>&1
 echo "执行成功"
 echo "退出虚拟环境"
 deactivate
