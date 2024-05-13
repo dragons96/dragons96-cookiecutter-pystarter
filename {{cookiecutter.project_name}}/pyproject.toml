@@ -56,7 +56,7 @@ myst-parser = {version = ">=0.16.1"}
 
 [tool.poetry.scripts]
 main = "{{cookiecutter.package_name}}.cmd.main:main"
-gen = "{{cookiecutter.package_name}}.cmd.gen:main"
+gen = "gen.main:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]

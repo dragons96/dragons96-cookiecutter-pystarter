@@ -1,5 +1,5 @@
 import os
-from {{ cookiecutter.package_name }}.generators.common import mkdir, create_file, add_poetry_script, str_format, add_docker_compose_script
+from gen.generators.common import mkdir, create_file, add_poetry_script, str_format, add_docker_compose_script
 
 
 def generate_django(project_dir: str, package_dir: str, override: bool = False, *args, **kwargs):
