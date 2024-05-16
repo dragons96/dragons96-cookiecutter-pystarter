@@ -111,16 +111,19 @@ echo "执行成功"
 echo "退出虚拟环境"
 deactivate
 ''')
-        dockerfile_path = project_dir + os.sep + 'Dockerfile.flask'
+        dockerfile_path = project_dir + os.sep + 'flask.Dockerfile'
         create_file(dockerfile_path, '''FROM python:3.9
 
 WORKDIR /app
 
 COPY . /app
 
+# 系统时区改为上海
+RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone
+
 RUN pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
 
-RUN pip install --upgrade poetry
+RUN pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple poetry
 
 RUN poetry lock
 
@@ -134,7 +137,7 @@ CMD ["poetry", "run", "flask", "--env", "pro", "--host", "0.0.0.0", "--port", "8
     container_name: {{cookiecutter.project_name}}_flask
     build:
       context: .
-      dockerfile: Dockerfile.flask
+      dockerfile: flask.Dockerfile
     image: {{cookiecutter.project_name}}_flask:latest
     volumes:
       - ".:/app"

@@ -115,16 +115,19 @@ echo "退出虚拟环境"
 deactivate
 ''')
 
-        dockerfile_file = project_dir + os.sep + 'Dockerfile.fastapi'
+        dockerfile_file = project_dir + os.sep + 'fastapi.Dockerfile'
         create_file(dockerfile_file, '''FROM python:3.9
 
 WORKDIR /app
 
 COPY . /app
 
+# 系统时区改为上海
+RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone
+
 RUN pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
 
-RUN pip install --upgrade poetry
+RUN pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple poetry
 
 RUN poetry lock
 
@@ -138,7 +141,7 @@ CMD ["poetry", "run", "fastapi", "--env", "pro", "--host", "0.0.0.0", "--port", 
     container_name: {{cookiecutter.project_name}}_fastapi
     build:
       context: .
-      dockerfile: Dockerfile.fastapi
+      dockerfile: fastapi.Dockerfile
     image: {{cookiecutter.project_name}}_fastapi:latest
     volumes:
       - ".:/app"

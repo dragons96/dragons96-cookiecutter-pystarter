@@ -295,16 +295,19 @@ echo "退出虚拟环境"
 deactivate
 ''')
 
-        dockerfile_file = project_dir + os.sep + 'Dockerfile.django'
+        dockerfile_file = project_dir + os.sep + 'django.Dockerfile'
         create_file(dockerfile_file, '''FROM python:3.9
 
 WORKDIR /app
 
 COPY . /app
 
+# 系统时区改为上海
+RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone
+
 RUN pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
 
-RUN pip install --upgrade poetry
+RUN pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple poetry
 
 RUN poetry lock
 
@@ -318,7 +321,7 @@ CMD ["poetry", "run", "django", "--env", "pro", "--django_args", "runserver 0.0.
     container_name: {{cookiecutter.project_name}}_django
     build:
       context: .
-      dockerfile: Dockerfile.django
+      dockerfile: django.Dockerfile
     image: {{cookiecutter.project_name}}_django:latest
     volumes:
       - ".:/app"
