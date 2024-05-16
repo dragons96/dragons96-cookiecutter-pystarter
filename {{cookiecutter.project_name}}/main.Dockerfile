@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY . /app
 
+# 系统时区改为上海
+RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone
+
 RUN pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
 
 RUN pip install --upgrade poetry
