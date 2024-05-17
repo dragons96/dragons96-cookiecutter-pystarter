@@ -9,10 +9,10 @@ RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shang
 
 RUN pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
 
-RUN pip install --upgrade poetry
+RUN pip install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple poetry
 
 RUN poetry lock
 
 RUN poetry install --only main
 
-CMD ["poetry", "run", "main", "--env", "pro"]
+CMD poetry run main --env pro

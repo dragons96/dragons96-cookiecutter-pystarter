@@ -253,7 +253,8 @@ def main(project_dir: Optional[str] = None,
         os.environ['PROJECT_DIR'] = project_dir
     if env:
         os.environ['ENV'] = env
-    setup('flask_{}.log'.format(cfg().project_name), level=log_level)
+    file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
+    setup('{}.log'.format(file_name), level=log_level)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     # 启动django
     django_args_list = [item.strip() for item in django_args.split(' ') if item.strip()]

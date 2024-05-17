@@ -11,7 +11,8 @@ def generate_task(project_dir: str, package_dir: str, override: bool = False,
     task_dir = package_dir + os.sep + 'tasks'
     task_init_py = task_dir + os.sep + '__init__.py'
     mkdir(task_dir)
-    create_file(task_init_py, override=override)
+    # 该文件不覆盖, 防止影响其他逻辑
+    create_file(task_init_py)
 
     names = extract_names(task_class)
     task_py = task_dir + os.sep + '_'.join(names) + '.py'

@@ -22,7 +22,8 @@ def main(project_dir: Optional[str] = None,
     if env:
         os.environ['ENV'] = env
     # 设置日志文件
-    setup('{}.log'.format(cfg().project_name), level=log_level)
+    file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
+    setup('{}.log'.format(file_name), level=log_level)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
 
 

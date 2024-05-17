@@ -73,8 +73,9 @@ def main(project_dir: Optional[str] = None,
         os.environ['ENV'] = env
     if reload is None:
         reload = get_env().is_dev()
-    setup('flask_{}.log'.format(cfg().project_name), level=log_level)
-    setup_uvicorn('flask_uvicorn_{}.log'.format(cfg().project_name), level=log_level)
+    file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
+    setup('{}.log'.format(file_name), level=log_level)
+    setup_uvicorn('{}.log'.format(file_name + '.' + 'uvicorn'), level=log_level)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     uvicorn.run('{{cookiecutter.package_name}}.flask.app:asgi_app', host=host, port=port, workers=workers, reload=reload)
 

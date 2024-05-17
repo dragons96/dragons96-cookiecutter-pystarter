@@ -75,5 +75,19 @@ def django(override: Optional[bool] = False):
     generate_django(project_dir=project_dir, package_dir=package_dir, override=override)
 
 
+@main.command()
+@click.option('--name', default=None, help='cmd命令名称, 使用poetry run {name} 执行生成的命令, 必填')
+@click.option('--override', default=False, help='是否覆盖代码, 不建议覆盖, 若要覆盖请确认覆盖代码是否对业务存在影响, 默认false')
+@click.version_option(version="1.0.0", help='查看命令版本')
+@click.help_option('-h', '--help', help='查看命令帮助')
+def cmd(name: str, override: Optional[bool] = False):
+    if not name:
+        logger.error('[--name]参数不能为空')
+        return
+    project_dir = get_project_dir()
+    package_dir = get_package_dir()
+    generate_cmd(project_dir=project_dir, package_dir=package_dir, override=override, command=name)
+
+
 if __name__ == "__main__":
     main()
