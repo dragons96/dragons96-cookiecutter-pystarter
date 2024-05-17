@@ -20,9 +20,9 @@
 
 ## 新增 CMD 命令
 该操作会生成基于`poetry`的CMD命令, sh脚本, Dockerfile配置, docker-compose配置
-1. 生成`poetry`命令: `poetry run gen cmd {name}`, 示例如下:
+1. 生成`poetry`命令: `poetry run gen cmd --name {name}`, 示例如下:
 ```shell
-poetry run gen cmd hello
+poetry run gen cmd --name hello
 
 # 将会在 src/{{ cookiecutter.package_name }}/cmd 目录下生成 hello_main.py 文件
 
