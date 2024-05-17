@@ -94,7 +94,7 @@ RUN poetry lock
 RUN poetry install --only main
 
 CMD poetry run ${command} --env pro
-''', command=command))
+''', command=command), override=override)
     add_docker_compose_script(project_dir, str_format('''  ${cmd_name}:
     container_name: {{cookiecutter.project_name}}_${cmd_name}
     build:
