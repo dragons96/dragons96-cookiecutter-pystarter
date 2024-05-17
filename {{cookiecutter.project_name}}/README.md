@@ -18,6 +18,24 @@
 2. 每开发一个新的cmd命令行工具需在`pyproject.toml`文件的`[tool.poetry.scripts]`下新配置一个poetry命令工具
 3. 使用`poetry run xxx`执行开发的cmd命令行工具
 
+## 新增 CMD 命令
+该操作会生成基于`poetry`的CMD命令, sh脚本, Dockerfile配置, docker-compose配置
+1. 生成`poetry`命令: `poetry run gen cmd {name}`, 示例如下:
+```shell
+poetry run gen cmd hello
+
+# 将会在 src/{{ cookiecutter.package_name }}/cmd 目录下生成 hello_main.py 文件
+
+# 执行hello命令
+poetry run hello
+# 使用sh脚本执行
+sh bin/hello.sh
+# 使用docker-compose打包运行, 仅执行hello服务
+docker-compose up hello
+# docker-compose后台运行
+docker-compose up -d hello
+```
+
 ## FastAPI 配置
 1. 生成模板代码: `poetry run gen fastapi`
 2. 安装相关依赖: `poetry add fastapi uvicorn[standard]`
