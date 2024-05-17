@@ -47,9 +47,9 @@ def main(project_dir: Optional[str] = None,
 if __name__ == "__main__":
     main()
 ''', override=override)
-    add_poetry_script(project_dir, command + str_format('${command} = "{{cookiecutter.package_name}}.cmd.${cmd_main_name}:main"',
-                                                        command=command,
-                                                        cmd_main_name=cmd_main_name))
+    add_poetry_script(project_dir, str_format('${command} = "{{cookiecutter.package_name}}.cmd.${cmd_main_name}:main"',
+                                              command=command,
+                                              cmd_main_name=cmd_main_name))
     bin_dir = project_dir + os.sep + 'bin'
     bin_file = bin_dir + os.sep + cmd_name + '.sh'
     create_file(bin_file, str_format('''# 获取脚本文件目录
