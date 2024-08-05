@@ -1,8 +1,10 @@
 import os
+import sys
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg
 from {{ cookiecutter.package_name }}.logger import setup
+from {{ cookiecutter.package_name }} import utils
 from typing import Optional
 
 
@@ -17,6 +19,9 @@ def main(project_dir: Optional[str] = None,
          env: Optional[str] = 'dev',
          log_level: Optional[str] = 'INFO') -> None:
     """{{cookiecutter.friendly_name}} cmd."""
+    # 如果是pyinstaller环境, 先把当前路径设置为执行路径, 以便于无参运行
+    if utils.is_pyinstaller_env():
+        os.environ['PROJECT_DIR'] = os.path.dirname(sys.executable)
     if project_dir:
         os.environ['PROJECT_DIR'] = project_dir
     if env:

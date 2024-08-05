@@ -38,11 +38,13 @@ asgi_app = WSGIMiddleware(app)
         cmd_dir = package_dir + os.sep + 'cmd'
         flask_cmd_main_py = cmd_dir + os.sep + 'flask_main.py'
         create_file(flask_cmd_main_py, '''import os
+import sys
 import multiprocessing
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg
 from {{ cookiecutter.package_name }}.logger import setup, setup_uvicorn
+from {{ cookiecutter.package_name }} import utils
 from typing import Optional
 from dragons96_tools.env import get_env
 import uvicorn
@@ -66,7 +68,10 @@ def main(project_dir: Optional[str] = None,
          port: Optional[int] = 8000,
          workers: Optional[int] = 1,
          reload: Optional[bool] = None) -> None:
-    """Demo FastAPI cmd."""
+    """{{cookiecutter.friendly_name}} Flask cmd."""
+    # 如果是pyinstaller环境, 先把当前路径设置为执行路径, 以便于无参运行
+    if utils.is_pyinstaller_env():
+        os.environ['PROJECT_DIR'] = os.path.dirname(sys.executable)
     if project_dir:
         os.environ['PROJECT_DIR'] = project_dir
     if env:
@@ -104,6 +109,22 @@ source venv/bin/activate
 echo "开始安装生产环境依赖"
 poetry install --only main
 echo "安装生产环境依赖完成"
+echo "开始检查是否已存在运行中的进程"
+pids=$(pgrep -f '{{cookiecutter.project_name}}-[A-Za-z0-9_]*-py3.[0-9]+/bin/flask')
+if [ -z "$pids" ]; then
+  echo "无正在运行中的进程, 忽略"
+else
+  # 通过for循环遍历所有进程ID
+  for pid in $pids; do
+    echo "存在正在运行中的进程: $pid, 即将终止进程..."
+    kill "$pid" # 使用引号以确保ID作为参数正确传递
+    if [ $? -eq 0 ]; then
+      echo "进程: $pid 已被成功终止"
+    else
+      echo "进程: $pid 终止失败"
+    fi
+  done
+fi
 # 执行命令
 echo "开始执行命令"
 # 执行命令 --workers 工作进程数, 正式环境可根据CPU核数设置

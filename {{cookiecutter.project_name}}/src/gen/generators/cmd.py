@@ -16,10 +16,12 @@ def generate_cmd(project_dir: str, package_dir: str, override: bool = False,
     cmd_main_name = '_'.join(names)
     cmd_py = cmd_dir + os.sep + cmd_main_name + '.py'
     create_file(cmd_py, '''import os
+import sys
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg
 from {{ cookiecutter.package_name }}.logger import setup
+from {{ cookiecutter.package_name }} import utils
 from typing import Optional
 
 
@@ -34,6 +36,9 @@ def main(project_dir: Optional[str] = None,
          env: Optional[str] = 'dev',
          log_level: Optional[str] = 'INFO') -> None:
     """{{cookiecutter.friendly_name}} cmd."""
+    # 如果是pyinstaller环境, 先把当前路径设置为执行路径, 以便于无参运行
+    if utils.is_pyinstaller_env():
+        os.environ['PROJECT_DIR'] = os.path.dirname(sys.executable)
     if project_dir:
         os.environ['PROJECT_DIR'] = project_dir
     if env:
@@ -67,6 +72,22 @@ source venv/bin/activate
 echo "开始安装生产环境依赖"
 poetry install --only main
 echo "安装生产环境依赖完成"
+echo "开始检查是否已存在运行中的进程"
+pids=$(pgrep -f '{{cookiecutter.project_name}}-[A-Za-z0-9_]*-py3.[0-9]+/bin/{{command}}')
+if [ -z "$pids" ]; then
+  echo "无正在运行中的进程, 忽略"
+else
+  # 通过for循环遍历所有进程ID
+  for pid in $pids; do
+    echo "存在正在运行中的进程: $pid, 即将终止进程..."
+    kill "$pid" # 使用引号以确保ID作为参数正确传递
+    if [ $? -eq 0 ]; then
+      echo "进程: $pid 已被成功终止"
+    else
+      echo "进程: $pid 终止失败"
+    fi
+  done
+fi
 # 执行命令
 echo "开始执行命令"
 poetry run ${command} --env pro >> /dev/null 2>&1
