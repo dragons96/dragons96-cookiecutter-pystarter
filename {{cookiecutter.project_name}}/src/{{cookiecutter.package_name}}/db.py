@@ -2,6 +2,7 @@ from dragons96_tools.sqlalchemy import SqlAlchemyClient
 from dragons96_tools.env import get_env
 from {{cookiecutter.package_name}}.config import cfg
 from {{cookiecutter.package_name}}.models.config import CommonDBConfig
+from sqlalchemy import URL
 from loguru import logger
 
 __db_map = {}
@@ -47,13 +48,9 @@ def db_select(_id: str) -> SqlAlchemyClient:
 
 
 def __gen_sqlalchemy_url(config: CommonDBConfig):
-    up, hp = None, None
-    if config.user:
-        up = f'{config.user}:{config.password}'
-    if config.host and config.port:
-        hp = f'{config.host}:{config.port}'
-    if hp and up:
-        return f'{config.sqlalchemy_schema}://{up}@{hp}/{config.db}'
-    if hp:
-        return f'{config.sqlalchemy_schema}://{hp}/{config.db}'
-    return f'{config.sqlalchemy_schema}:///{config.db}'
+    return URL.create(config.sqlalchemy_schema,
+                      host=config.host,
+                      port=config.port,
+                      username=config.user,
+                      password=config.password,
+                      database=config.db)

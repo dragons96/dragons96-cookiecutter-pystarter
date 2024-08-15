@@ -4,10 +4,10 @@ from dragons96_tools.models import BaseModel
 
 class CommonDBConfig(BaseModel):
     """通用 DB 配置"""
-    host: Optional[str] = ''
-    port: Optional[int] = 0
-    user: Optional[str] = ''
-    password: Optional[str] = ''
+    host: Optional[str] = None
+    port: Optional[int] = None
+    user: Optional[str] = None
+    password: Optional[str] = None
     db: Optional[str] = None
     # sqlalchemy的schema, 仅使用sqlalchemy需要配置, 例如:sqlite, mysql+pymysql等等
     sqlalchemy_schema: Optional[str] = None
