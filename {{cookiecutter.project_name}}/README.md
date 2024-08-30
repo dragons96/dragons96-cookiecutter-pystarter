@@ -11,7 +11,7 @@
 6. 安装的依赖仅本地环境需要而正式环境不需要则可使用--group dev参数, 以pyinstaller为例, `poetry add --group dev pyinstaller`
 
 ## 运行
-1. 运行 `poetry run main`, 对应 `src/{{ cookiecutter.package_name }}/cmd/main.py` (见`pyproject.toml`的`[tool.poetry.scripts]`配置)
+1. 示例方法, `poetry run main`
 
 ## 实践指南
 1. 开发cmd命令行工具推荐从`src/{{cookiecutter.package_name}}/cmd/main.py`复制一个新文件作为业务cmd命令行入口进行开发
@@ -28,8 +28,9 @@ poetry run gen cmd --name hello
 
 # 执行hello命令
 poetry run hello
-# 使用sh脚本执行
+# 执行脚本执行
 sh bin/hello.sh
+bash bin/hello.sh
 # 使用docker-compose打包运行, 仅执行hello服务
 docker-compose up hello
 # docker-compose后台运行
@@ -58,6 +59,12 @@ docker-compose up -d hello
 3. 使用scrapy命令 `poetry run scrapy xxx`
 - 生成xxx爬虫: `poetry run scrapy genspider xxx xxx.com`
 - 执行xxx爬虫: `poetry run scrapy crawl xxx`
+
+## Chrome 配置
+1. 查询`chrome`/`chromedriver`版本: `poetry run chrome list`
+2. 下载指定系统版本的`chrome`: `poetry run chrome downlaod --type chrome --version 128.0.6613.84 --system win64`, (下载路径为当前项目路径/extensions)
+3. 下载指定系统版本的`chromedriver`: `poetry run chrome download --type chromedriver --version 128.0.6613.84 --system win64`
+4. 更多下载参数说明可使用`-h`参数: `poetry run chrome download -h`
 
 ## 任务生成
 1. 生成任务代码: `poetry run gen task --task_class xxx --task_name 示例任务`
