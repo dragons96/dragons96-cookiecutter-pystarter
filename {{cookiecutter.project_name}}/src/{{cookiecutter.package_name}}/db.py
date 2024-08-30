@@ -9,26 +9,29 @@ from loguru import logger
 __db_map = {}
 
 
-def db_select(_id: str) -> Union[SqlAlchemyClient, AsyncSqlAlchemyClient]:
+def db_select(_id: Union[str, CommonDBConfig]) -> Union[SqlAlchemyClient, AsyncSqlAlchemyClient]:
     """
     DB客户端选择器
     Args:
-        _id: 在{{cookiecutter.package_name}}.models.config.Config.db 中定义的名称属性名称
+        _id: 在{{cookiecutter.package_name}}.models.config.Config.db 中定义的名称属性名称 或者 数据库配置对象
             假设配置了一个sqlite的数据源, 定义属性名称为sqlite_xxx_db, 示例:
                 class MultiDBConfig(BaseModel):
                     sqlite_xxx_db: Optional[CommonDBConfig] = CommonDBConfig()
-            则可通过 db_select('sqlite_xxx_db') 获取对应的DB客户端
+            则可通过 db_select('sqlite_xxx_db') 或 db_select(cfg().db.sqlite_xxx_db) 获取对应的DB客户端
     Returns:
         SqlAlchemyClient|AsyncSqlAlchemyClient: DB客户端, 根据配置的is_async决定返回同步还是异步客户端
     """
+    if isinstance(_id, str):
+        db_config = cfg().db
+        try:
+            config: CommonDBConfig = getattr(db_config, _id)
+        except AttributeError:
+            raise ValueError('未配置名称为[{}]的DB配置'.format(_id))
+    else:
+        config, _id = _id, str(__gen_sqlalchemy_url(_id))
     client = __db_map.get(_id)
     if client:
         return client
-    db_config = cfg().db
-    try:
-        config: CommonDBConfig = getattr(db_config, _id)
-    except AttributeError:
-        raise ValueError('未配置名称为[{}]的DB配置'.format(_id))
     return __new_sqlalchemy_client(config, _id)
 
 
