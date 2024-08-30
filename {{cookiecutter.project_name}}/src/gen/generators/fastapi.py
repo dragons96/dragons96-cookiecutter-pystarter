@@ -30,7 +30,7 @@ def wrapper_log_middleware(app: FastAPI) -> FastAPI:
         try:
             body = await request.body()
             if body:
-                body = json.loads(body.decode('utf-8'))
+                body = body.decode('utf-8')
             response: Response = await call_next(request)
             if isinstance(response, StreamingResponse):
                 # 如果是流式响应，读取内容
