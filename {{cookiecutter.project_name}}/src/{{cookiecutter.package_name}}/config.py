@@ -22,8 +22,9 @@ def _load_config(project_dir: str):
     exist_config_file_path, exist_env_config_file_path = os.path.exists(config_file_path), os.path.exists(env_config_file_path)
     global _cfg
     if not exist_config_file_path and not exist_env_config_file_path:
-        logger.error('未找到配置文件[{}]或[{}], 无法加载配置, 程序终止', config_file_path, env_config_file_path)
-        exit(1)
+        logger.warning('未找到配置文件[{}]或[{}], 无法加载配置', config_file_path, env_config_file_path)
+        _cfg = Config()
+        return
     _data_file_loader = AutoDataFileLoader()
     # 配置对象_cfg
     _cfg_dict = None
