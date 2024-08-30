@@ -11,6 +11,19 @@ class CommonDBConfig(BaseModel):
     db: Optional[str] = None
     # sqlalchemy的schema, 仅使用sqlalchemy需要配置, 例如:sqlite, mysql+pymysql等等
     sqlalchemy_schema: Optional[str] = None
+    # 是否是async连接
+    is_async: Optional[bool] = False
+
+
+class SqliteConfig(CommonDBConfig):
+    """Sqlite 配置"""
+    sqlalchemy_schema: Optional[str] = 'sqlite'
+
+
+class AsyncSqliteConfig(CommonDBConfig):
+    """Sqlite async配置"""
+    sqlalchemy_schema: Optional[str] = 'sqlite+aiosqlite'
+    is_async: Optional[bool] = True
 
 
 class MysqlConfig(CommonDBConfig):
@@ -19,6 +32,32 @@ class MysqlConfig(CommonDBConfig):
     port: Optional[int] = 3306
     user: Optional[str] = 'root'
     sqlalchemy_schema: Optional[str] = 'mysql+pymysql'
+
+
+class AsyncMysqlConfig(CommonDBConfig):
+    """Mysql async配置"""
+    host: Optional[str] = '127.0.0.1'
+    port: Optional[int] = 3306
+    user: Optional[str] = 'root'
+    sqlalchemy_schema: Optional[str] = 'mysql+aiomysql'
+    is_async: Optional[bool] = True
+
+
+class PostgresqlConfig(CommonDBConfig):
+    """postgresql 配置"""
+    host: Optional[str] = '127.0.0.1'
+    port: Optional[int] = 5432
+    user: Optional[str] = 'root'
+    sqlalchemy_schema: Optional[str] = 'postgresql+psycopg2'
+
+
+class AsyncPostgresqlConfig(CommonDBConfig):
+    """postgresql async配置"""
+    host: Optional[str] = '127.0.0.1'
+    port: Optional[int] = 5432
+    user: Optional[str] = 'root'
+    sqlalchemy_schema: Optional[str] = 'postgresql+asyncpg'
+    is_async: Optional[bool] = True
 
 
 class RedisConfig(CommonDBConfig):
