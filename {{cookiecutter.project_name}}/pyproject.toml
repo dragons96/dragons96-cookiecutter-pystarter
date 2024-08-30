@@ -53,10 +53,13 @@ sphinx-click = ">=3.0.2"
 typeguard = ">=2.13.3"
 xdoctest = {extras = ["colors"], version = ">=0.15.10"}
 myst-parser = {version = ">=0.16.1"}
+colorama = ">=0.4.6"
+tqdm = ">=4.66.5"
 
 [tool.poetry.scripts]
 main = "{{cookiecutter.package_name}}.cmd.main:main"
-gen = "gen.main:main"
+chrome = "extensions.chrome.main:main"
+gen = "extensions.gen.main:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]

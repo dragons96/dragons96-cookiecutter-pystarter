@@ -36,7 +36,7 @@ def main(project_dir: Optional[str] = None,
          env: Optional[str] = 'dev',
          log_level: Optional[str] = 'INFO') -> None:
     """{{cookiecutter.friendly_name}} cmd."""
-    # 如果是pyinstaller环境, 先把当前路径设置为执行路径, 以便于无参运行
+    # 如果是pyinstaller环境, 默认把当前路径设置为执行路径
     if utils.is_pyinstaller_env():
         os.environ['PROJECT_DIR'] = os.path.dirname(sys.executable)
     if project_dir:
