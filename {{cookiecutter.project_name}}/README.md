@@ -84,7 +84,9 @@ docker-compose up -d hello
 4. `src/`: 项目源码
 5. `src/{{cookiecutter.package_name}}`: 项目源码主包, 所有代码均放在该包下
 6. `src/{{cookiecutter.package_name}}/cmd`: 代码命令行入口
-7. `src/{{cookiecutter.package_name}}/generators/`: 代码生成工具, 可自定义代码生成工具
+7. `src/{{cookiecutter.package_name}}/extensions/`: 拓展包
+8. `src/{{cookiecutter.package_name}}/extensions/gen`: 代码生成器
+9. `src/{{cookiecutter.package_name}}/extensions/chrome`: chrome/chromedriver下载器
 8. `src/{{cookiecutter.package_name}}/models`: 数据模型, 包含配置数据模型, 常量数据模型, 数据库模型等均放在该包下
 9. `src/{{cookiecutter.package_name}}/config.py`: 配置工具, 通过该工具可获取配置信息
 10. `src/{{cookiecutter.package_name}}/db.py`: 数据库工具, 通过该工具可获取数据库连接执行数据库相关操作
