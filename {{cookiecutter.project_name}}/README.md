@@ -14,9 +14,92 @@
 1. 示例方法, `poetry run main`
 
 ## 实践指南
-1. 开发cmd命令行工具推荐从`src/{{cookiecutter.package_name}}/cmd/main.py`复制一个新文件作为业务cmd命令行入口进行开发
-2. 每开发一个新的cmd命令行工具需在`pyproject.toml`文件的`[tool.poetry.scripts]`下新配置一个poetry命令工具
-3. 使用`poetry run xxx`执行开发的cmd命令行工具
+前置步骤:
+1. 初始化更新poetry lock, `poetry lock`
+2. 安装poetry依赖, `poetry install`
+
+### 任务类脚本
+1. 执行生成任务命令, `poetry run gen task --task_class DemoTask --task_name 示例任务`, 将会生成`src/{{cookiecutter.package_name}}/tasks/demo_task.py`文件, 此处编写任务逻辑
+2. 执行生成CMD命令, `poetry run gen cmd --name demo`, 将会在`src/{{cookiecutter.package_name}}/cmd/demo_main.py`文件, 此处编写命令逻辑
+3. 编辑`src/{{cookiecutter.package_name}}/tasks/demo_task.py`任务文件:
+```python
+... # 省略
+
+class DemoTask(Task):
+
+    def _run(self, *args, **kwargs):
+        # 编辑任务逻辑
+        self._logger.info('示例任务执行')
+
+... # 省略
+```
+4. 编辑`src/{{cookiecutter.package_name}}/cmd/demo_main.py`CMD入口文件:
+```python
+... # 省略
+
+def main(project_dir: Optional[str] = None,
+         env: Optional[str] = 'dev',
+         log_level: Optional[str] = 'INFO') -> None:
+    ... # 省略
+
+    # 执行任务
+    from {{package_name}}.tasks.demo_task import DemoTask
+    DemoTask().run()
+
+... # 省略
+```
+5. 运行, 支持多种方式如下:
+```shell
+# 方式1
+poetry run demo --env [dev|test|pro]
+# 方式2
+sh bin/demo.sh --env [dev|test|pro]
+bash bin/demo.sh --env [dev|test|pro]
+# 方式3 docker-compose
+docker-compose up demo
+```
+6. 部署:
+```shell
+# 1. 服务器拉取代码并安装python>=3.9环境
+# 2. 执行命令安装虚拟环境及依赖
+bash bin/install.sh
+# 3. 运行
+bash bin/demo.sh
+```
+7. [可选]打包
+```shell
+poetry add --group dev pyinstaller
+
+# 打包
+poetry run pyinstaller --onefile "./src/{{cookiecutter.package_name}}/cmd/demo_main.py"
+# 运行
+./dist/demo_main --project_dir . --env [dev|test|pro]
+```
+
+### Web服务 (以fastapi为例)
+1. 执行生成`fastapi`代码命令, `poetry run gen fastapi`
+2. fastapi相关组件位于 `src/{{cookiecutter.package_name}}/fastapi/`, 入口CMD位于`src/{{cookiecutter.package_name}}/cmd/fastapi_main.py`
+3. 启动项目: `poetry run fastapi`
+4. 访问`http://localhost:8000`, 返回`Hello {{ cookiecutter.project_name }} by FastAPI!` 则说明运行成功
+5. 服务器运行:
+```shell
+# 方式1
+# 其中 --port 指定应用端口, --workers 工作进程数
+nohup poetry run fastapi --env [dev|test|pro] --port 8000 --workers 1 >> demo.log &
+# 方式2
+sh bin/fastapi.sh --env [dev|test|pro]  --port 8000 --workers 1
+bash bin/fastapi.sh --env [dev|test|pro]  --port 8000 --workers 1
+# 方式3 docker-compose
+docker-compose up -d fastapi
+```
+6. 部署:
+```shell
+# 1. 服务器拉取代码并安装python>=3.9环境
+# 2. 执行命令安装虚拟环境及依赖
+bash bin/install.sh
+# 3. 运行
+bash bin/demo.sh
+```
 
 ## 新增 CMD 命令
 该操作会生成基于`poetry`的CMD命令, sh脚本, Dockerfile配置, docker-compose配置
