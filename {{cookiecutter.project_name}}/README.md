@@ -66,6 +66,8 @@ docker-compose up -d hello
 3. 下载指定系统版本的`chromedriver`: `poetry run chrome download --type chromedriver --version 128.0.6613.84 --system win64`
 4. 更多下载参数说明可使用`-h`参数: `poetry run chrome download -h`
 
+**PS: 使用自动化工具推荐使用`undetected-chromedriver`代替`selenium`**
+
 ## 任务生成
 1. 生成任务代码: `poetry run gen task --task_class xxx --task_name 示例任务`
 - task_class: 任务类名
