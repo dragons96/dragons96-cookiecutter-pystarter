@@ -102,7 +102,7 @@ def wrapper_exception_handler(app: FastAPI) -> FastAPI:
 from {{cookiecutter.package_name}}.fastapi.exception_handler import wrapper_exception_handler
 from {{cookiecutter.package_name}}.fastapi.middlewares import wrapper_log_middleware
 from dragons96_tools.models import R
-from unique_tools.env import get_env
+from dragons96_tools.env import get_env
 from {{cookiecutter.package_name}}.logger import setup, setup_uvicorn
 from loguru import logger
 
