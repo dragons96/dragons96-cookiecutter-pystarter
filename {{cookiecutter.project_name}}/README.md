@@ -43,7 +43,7 @@ def main(project_dir: Optional[str] = None,
     ... # 省略
 
     # 执行任务
-    from {{package_name}}.tasks.demo_task import DemoTask
+    from {{cookiecutter.package_name}}.tasks.demo_task import DemoTask
     DemoTask().run()
 
 ... # 省略
@@ -119,6 +119,14 @@ docker-compose up hello
 # docker-compose后台运行
 docker-compose up -d hello
 ```
+
+### 实践工具
+1. 推荐使用[`httpx`](https://www.python-httpx.org/)代替`requests`, `httpx`支持`async`, API与`requests`相似, 替换需要注意的事项:
+   1. `httpx`请求`timeout`默认是`5s`超时, `requests` 默认不超时
+   2. `httpx`请求默认不会自动重定向, 重定向需要增加`follow_redirects=True`参数, `requests`默认自动重定向
+2. 推荐使用`sqlalchemy` + `sqlacodegen_v2` + `数据库驱动` 代替各数据库特定包, 使用统一的API便于管理、维护与迁移
+3. 推荐使用自定义`Model`(继承`dragons96_tools.models.BaseModel`) 代替各种`dict`字典, 业务上频繁使用`dict`不直观难以维护
+
 
 ## FastAPI 配置
 1. 生成模板代码: `poetry run gen fastapi`
