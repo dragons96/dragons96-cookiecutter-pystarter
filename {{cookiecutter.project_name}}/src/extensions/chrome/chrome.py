@@ -1,7 +1,7 @@
 import os
 import zipfile
 from typing import List
-import requests
+import httpx
 from colorama import Fore
 from tqdm import tqdm
 from {{cookiecutter.package_name}} import utils
@@ -17,7 +17,7 @@ def list_chrome(**kwargs) -> List[str]:
 
     """
     url = 'https://registry.npmmirror.com/-/binary/chrome-for-testing/'
-    res = requests.get(url, headers={'User-Agent': kwargs.get('user_agent', DEFAULT_UA)})
+    res = httpx.get(url, headers={'User-Agent': kwargs.get('user_agent', DEFAULT_UA)})
     assert res.status_code == 200, '获取浏览器版本失败, 响应状态码: {}'.format(res.status_code)
     """
     [{
@@ -70,7 +70,7 @@ def _check_chrome_version_system(version: str, system: str, type_: str, **kwargs
     # 检查是否存在
     url = 'https://registry.npmmirror.com/-/binary/chrome-for-testing/{}/{}/'.format(version, system)
     headers = {'User-Agent': kwargs.get('user_agent', DEFAULT_UA)}
-    res = requests.get(url, headers=headers)
+    res = httpx.get(url, headers=headers)
     if res.status_code == 404:
         print(Fore.LIGHTRED_EX + '[{}]未找到版本[{}]系统[{}], 请检查或切换版本重试'.format(type_, version, system))
         exit(1)
@@ -89,11 +89,11 @@ def _common_download_zip(version: str, system: str, type_: str, zip_file: str, *
 
 def _download_file(url, filename, headers=None, **kwargs):
     # 发起请求，获取文件总大小
-    response = requests.head(url, headers=headers, **kwargs)
+    response = httpx.head(url, headers=headers, **kwargs)
     total_size = int(response.headers.get('content-length', 0))
 
     # 使用GET请求下载文件
-    with requests.get(url, stream=True, headers=headers, **kwargs) as r:
+    with httpx.get('GET', url, headers=headers, follow_redirects=True, **kwargs) as r:
         r.raise_for_status()
         # 总长度
         total_length = int(r.headers.get('content-length', total_size))
@@ -103,7 +103,7 @@ def _download_file(url, filename, headers=None, **kwargs):
         # 打开文件准备写入
         with open(filename, 'wb') as f:
             # 使用tqdm作为文件写入的缓冲区
-            for chunk in tqdm(r.iter_content(chunk_size=8192),
+            for chunk in tqdm(r.iter_bytes(chunk_size=8192),
                               total=total_length // 8192,
                               unit='KB'):
                 f.write(chunk)
