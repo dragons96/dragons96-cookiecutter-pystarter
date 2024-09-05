@@ -88,6 +88,11 @@ class ClickhouseConfig(CommonDBConfig):
     sqlalchemy_schema: Optional[str] = 'clickhouse'
 
 
+class SqlalchemyConfig(BaseModel):
+    """sqlalchemy相关配置"""
+    echo: Optional[bool] = True
+
+
 class MultiDBConfig(BaseModel):
     """多 DB 配置"""
 
@@ -97,3 +102,4 @@ class Config(BaseModel):
     project_name: Optional[str] = 'undefined_project_name'
     log_dir: Optional[str] = './logs'
     db: Optional[MultiDBConfig] = MultiDBConfig()
+    sqlalchemy: Optional[SqlalchemyConfig] = SqlalchemyConfig()

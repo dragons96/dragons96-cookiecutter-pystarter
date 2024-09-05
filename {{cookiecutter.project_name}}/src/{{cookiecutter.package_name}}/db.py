@@ -55,11 +55,11 @@ def __new_sqlalchemy_client(config: CommonDBConfig, _id: str) -> Union[SqlAlchem
         except ImportError as e:
             logger.error('未安装pyhive依赖, sqlalchemy无法配置hive')
             raise e
-        client = client_cls(url=url, echo=not get_env().is_pro(),
+        client = client_cls(url=url, echo=cfg().sqlalchemy.echo,
                                   creator=lambda: hive.Connection(
                                       host=config.host, port=config.port, username=config.user, database=config.db)
                                   )
     else:
-        client = client_cls(url=url, echo=not get_env().is_pro())
+        client = client_cls(url=url, echo=cfg().sqlalchemy.echo)
     __db_map[_id] = client
     return client

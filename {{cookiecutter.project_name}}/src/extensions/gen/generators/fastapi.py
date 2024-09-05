@@ -103,12 +103,13 @@ from {{cookiecutter.package_name}}.fastapi.exception_handler import wrapper_exce
 from {{cookiecutter.package_name}}.fastapi.middlewares import wrapper_log_middleware
 from dragons96_tools.models import R
 from dragons96_tools.env import get_env
-from {{cookiecutter.package_name}}.logger import setup, setup_uvicorn
+from {{cookiecutter.package_name}}.logger import setup_loguru, setup_sqlalchemy, setup_uvicorn
 from loguru import logger
 
 # 设置日志文件
-setup('fastapi_{{ cookiecutter.project_name }}.log')
-setup_uvicorn('fastapi_uvicorn_{{ cookiecutter.project_name }}.log')
+setup_loguru('fastapi_{{ cookiecutter.project_name }}.log')
+setup_sqlalchemy('fastapi_{{ cookiecutter.project_name }}.sqlalchemy.log')
+setup_uvicorn('fastapi_{{ cookiecutter.project_name }}.uvicorn.log')
 app = FastAPI(
     title='{{ cookiecutter.friendly_name }}',
     version='1.0',
@@ -143,7 +144,7 @@ import multiprocessing
 import click
 from loguru import logger
 from {{cookiecutter.package_name}}.config import cfg
-from {{cookiecutter.package_name}}.logger import setup, setup_uvicorn
+from {{cookiecutter.package_name}}.logger import setup_loguru, setup_uvicorn, setup_sqlalchemy
 from {{ cookiecutter.package_name }} import utils
 from dragons96_tools.env import get_env
 from typing import Optional
@@ -179,8 +180,9 @@ def main(project_dir: Optional[str] = None,
     if reload is None:
         reload = get_env().is_dev()
     file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
-    setup('{}.log'.format(file_name), level=log_level)
-    setup_uvicorn('{}.log'.format(file_name + '.' + 'uvicorn'), level=log_level)
+    setup_loguru('fastapi_{}.log'.format(file_name), level=log_level)
+    setup_sqlalchemy('fastapi_{}.sqlalchemy.log'.format(file_name), level=log_level)
+    setup_uvicorn('fastapi_{}.uvicorn.log'.format(file_name), level=log_level)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     uvicorn.run('{{cookiecutter.package_name}}.fastapi.app:app', host=host, port=port, workers=workers, reload=reload)
 

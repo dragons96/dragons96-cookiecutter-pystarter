@@ -14,12 +14,13 @@ def generate_flask(project_dir: str, package_dir: str, override: bool = False, *
         create_file(flask_app_py, '''from flask import Flask
 from dragons96_tools.models import R
 from uvicorn.middleware.wsgi import WSGIMiddleware
-from {{ cookiecutter.package_name }}.logger import setup, setup_uvicorn
+from {{ cookiecutter.package_name }}.logger import setup_loguru, setup_uvicorn, setup_sqlalchemy
 from loguru import logger
 
 # 设置日志文件
-setup('flask_{{ cookiecutter.project_name }}.log')
-setup_uvicorn('flask_uvicorn_{{ cookiecutter.project_name }}.log')
+setup_loguru('flask_{{ cookiecutter.project_name }}.log')
+setup_sqlalchemy('flask_{{ cookiecutter.project_name }}.sqlalchemy.log')
+setup_uvicorn('flask_{{ cookiecutter.project_name }}.uvicorn.log')
 app = Flask(__name__)
 
 
@@ -43,7 +44,7 @@ import multiprocessing
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg
-from {{ cookiecutter.package_name }}.logger import setup, setup_uvicorn
+from {{ cookiecutter.package_name }}.logger import setup, setup_uvicorn, setup_sqlalchemy
 from {{ cookiecutter.package_name }} import utils
 from typing import Optional
 from dragons96_tools.env import get_env
@@ -79,8 +80,9 @@ def main(project_dir: Optional[str] = None,
     if reload is None:
         reload = get_env().is_dev()
     file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
-    setup('{}.log'.format(file_name), level=log_level)
-    setup_uvicorn('{}.log'.format(file_name + '.' + 'uvicorn'), level=log_level)
+    setup_loguru('flask_{}.log'.format(file_name), level=log_level)
+    setup_sqlalchemy('flask_{}.sqlalchemy.log'.format(file_name), level=log_level)
+    setup_uvicorn('flask_{}.uvicorn.log'.format(file_name), level=log_level)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     uvicorn.run('{{cookiecutter.package_name}}.flask.app:asgi_app', host=host, port=port, workers=workers, reload=reload)
 

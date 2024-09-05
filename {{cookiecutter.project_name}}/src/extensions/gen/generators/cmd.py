@@ -20,7 +20,7 @@ import sys
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg
-from {{ cookiecutter.package_name }}.logger import setup
+from {{ cookiecutter.package_name }}.logger import setup_loguru, setup_sqlalchemy
 from {{ cookiecutter.package_name }} import utils
 from typing import Optional
 
@@ -45,7 +45,8 @@ def main(project_dir: Optional[str] = None,
         os.environ['ENV'] = env
     # 设置日志文件
     file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
-    setup('{}.log'.format(file_name), level=log_level)
+    setup_loguru('{}.log'.format(file_name), level=log_level)
+    setup_sqlalchemy('{}.sqlalchemy.log'.format(file_name), level=log_level)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
 
 

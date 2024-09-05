@@ -1,3 +1,4 @@
+from .path import get_absolute_path, get_log_path
 
 
 def is_pyinstaller_env():

@@ -231,7 +231,7 @@ import sys
 import click
 from loguru import logger
 from {{ cookiecutter.package_name }}.config import cfg
-from {{ cookiecutter.package_name }}.logger import setup
+from {{ cookiecutter.package_name }}.logger import setup_loguru, setup_sqlalchemy
 from typing import Optional
 from {{ cookiecutter.package_name }}.django.manage import run
 
@@ -254,7 +254,8 @@ def main(project_dir: Optional[str] = None,
     if env:
         os.environ['ENV'] = env
     file_name = cfg().project_name + '.' + os.path.basename(__file__).split('.')[0]
-    setup('{}.log'.format(file_name), level=log_level)
+    setup_loguru('django_{}.log'.format(file_name), level=log_level)
+    setup_sqlalchemy('django_{}.sqlalchemy.log'.format(file_name), level=log_level)
     logger.info('运行成功, 当前项目: {}', cfg().project_name)
     # 启动django
     django_args_list = [item.strip() for item in django_args.split(' ') if item.strip()]
