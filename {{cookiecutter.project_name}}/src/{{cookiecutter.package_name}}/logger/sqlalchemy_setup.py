@@ -25,6 +25,6 @@ def setup_sqlalchemy(file_name,
         )
 
         file_handler.setFormatter(formatter_cls())
-        file_handler.addFilter(lambda e: e.levelno >= logging._nameToLevel(level))
+        file_handler.addFilter(lambda e: e.levelno >= logging._nameToLevel[level])
         logging_logger = logging.getLogger('sqlalchemy')
         logging_logger.addHandler(file_handler)
