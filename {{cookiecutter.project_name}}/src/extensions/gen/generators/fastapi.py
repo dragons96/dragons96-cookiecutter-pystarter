@@ -14,10 +14,8 @@ def generate_fastapi(project_dir: str, package_dir: str, override: bool = False,
         mkdir(fastapi_dir)
         create_file(fastapi_init_py, override=override)
         create_file(fastapi_middlewares_py, '''from fastapi import FastAPI, Request, Response
-from fastapi.responses import StreamingResponse
 from starlette.concurrency import iterate_in_threadpool
 from loguru import logger
-import json
 import time
 
 
@@ -32,7 +30,7 @@ def wrapper_log_middleware(app: FastAPI) -> FastAPI:
             if body:
                 body = body.decode('utf-8')
             response: Response = await call_next(request)
-            if isinstance(response, StreamingResponse):
+            if hasattr(response, 'body_iterator'):
                 # 如果是流式响应，读取内容
                 data_list = []
                 async for data in response.body_iterator:
