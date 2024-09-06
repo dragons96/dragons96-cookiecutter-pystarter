@@ -1,5 +1,5 @@
 import os
-from gen.generators.common import mkdir, create_file, add_poetry_script, extract_names, str_format
+from .common import mkdir, create_file, add_poetry_script, extract_names, str_format
 
 
 def generate_scrapy(project_dir: str, package_dir: str, override: bool = False, *args, **kwargs):

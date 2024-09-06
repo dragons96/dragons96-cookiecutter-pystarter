@@ -1,7 +1,7 @@
 import click
 from loguru import logger
 from typing import Optional
-from gen.generators import *
+from .generators import *
 from {{ cookiecutter.package_name }}.config import get_project_dir, get_package_dir
 
 

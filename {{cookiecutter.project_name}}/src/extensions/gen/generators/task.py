@@ -1,5 +1,5 @@
 import os
-from gen.generators.common import mkdir, create_file, extract_names
+from .common import mkdir, create_file, extract_names
 
 
 def generate_task(project_dir: str, package_dir: str, override: bool = False,
