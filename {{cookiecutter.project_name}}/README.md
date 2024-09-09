@@ -160,9 +160,10 @@ docker-compose up -d hello
 **PS: 使用自动化工具推荐使用`undetected-chromedriver`代替`selenium`**
 
 ## 任务生成
-1. 生成任务代码: `poetry run gen task --task_class xxx --task_name 示例任务`
+1. 生成任务代码: `poetry run gen task --task_class xxx --task_name 示例任务 [--async]`
 - task_class: 任务类名
 - task_name: 任务名称
+- async[可选]: 是否生成async的任务
 
 ## 环境变量
 1. PROJECT_DIR: 项目路径, 通常无需设置, pyinstaller打包后需设置
