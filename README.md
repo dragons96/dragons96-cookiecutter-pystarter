@@ -7,3 +7,4 @@
 1. 安装python3.9+ (省略)
 2. 安装cookiecutter, `pip install cookiecutter`
 3. 使用该模板安装项目, `cookiecutter git@gitee.com:dragons96/dragons96-cookiecutter-pystarter.git`
+4. 生成的项目具体功能及说明见对应项目的`README.md`文件
